@@ -1,0 +1,55 @@
+# Epage Core
+
+Epage 可视化配置工具核心依赖。
+
+[English Introduction](./README_EN.md) | 中文介绍
+
+## 文档
+
+官网：[http://epage.didichuxing.com](http://epage.didichuxing.com)
+
+- [开发文档](http://epage.didichuxing.com/developer/)
+
+
+## 演示地址
+
+- **[Demo](http://epage.didichuxing.com/examples/epage.html)**
+
+## 安装
+
+```sh
+npm install epage-core -S
+# 或者 yarn add epage
+```
+
+## 仓库更新说明
+
+本仓库为`Epage渲染器`及`Epage设计器`核心依赖，更新日志查看[CHANGLOG](./CHANGELOG.md)。
+
+更多`Epage渲染器`及相关工具参见：[https://github.com/epage-team](https://github.com/epage-team)。
+
+## 设计器及渲染器示例
+
+```js
+import {
+  Event,
+  Worker,
+  Logic,
+  Rule,
+  Store,
+  schema,
+  helper,
+  constant
+} from 'epage-core'
+
+```
+
+## 交流群
+
+微信群
+
+![](https://github.com/didi/epage/raw/master/public/imgs/epage-qrcode.png)
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
