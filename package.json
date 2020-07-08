@@ -1,6 +1,6 @@
 {
   "name": "epage-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Epage Core 一款基于schema的可视化页面配置工具核心模块",
   "author": "Chengzi <ttghost@126.com>",
   "main": "./dist/epage-core.min.js",
