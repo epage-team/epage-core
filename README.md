@@ -1,8 +1,6 @@
 # Epage Core
 
-Epage 可视化配置工具核心依赖。
-
-[English Introduction](./README_EN.md) | 中文介绍
+[Epage](https://github.com/didi/epage) 可视化配置工具核心依赖。
 
 ## 文档
 
