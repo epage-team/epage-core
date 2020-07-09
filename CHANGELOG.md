@@ -1,6 +1,17 @@
 # Change Log
 
 
+### 0.1.2
+
+- [feat] : 添加 `schema.base` 子模块导出
+
+```js
+import { schema } from 'epage-core'
+
+console.log(schema.base)
+// { input: Schema, select: Schema, ...}
+```
+
 ### 0.1.1
 
 - [feat] : 添加 `TypeBuilder` 导出

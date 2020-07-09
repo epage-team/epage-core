@@ -1,4 +1,4 @@
-import FormSchema from '../../FormSchema'
+import BaseSchema from '../../BaseSchema'
 
 export default class ButtonSchema extends BaseSchema {
   constructor (props) {
