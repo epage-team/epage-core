@@ -1,6 +1,10 @@
 # Change Log
 
 
+### 0.1.3（2020/07/22）
+
+- [feat] : 添加 `schema.base.RootSchema` 模块默认样式属性
+
 ### 0.1.2
 
 - [feat] : 添加 `schema.base` 子模块导出
