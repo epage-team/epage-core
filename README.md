@@ -45,11 +45,8 @@ import {
 ## 交流群
 
 QQ群
-<div style='width:300px;'>
 
-![](https://img-hxy021.didistatic.com/static/star/epage-qrcode-qq.png)
-
-</div>
+<img src="https://img-hxy021.didistatic.com/static/star/epage-qrcode-qq.png" width="250">
 
 ## License
 
