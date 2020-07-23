@@ -44,9 +44,12 @@ import {
 
 ## 交流群
 
-微信群
+QQ群
+<div style='width:300px;'>
 
-![](https://github.com/didi/epage/raw/master/public/imgs/epage-qrcode.png)
+![](https://img-hxy021.didistatic.com/static/star/epage-qrcode-qq.png)
+
+</div>
 
 ## License
 
