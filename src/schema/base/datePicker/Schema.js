@@ -5,6 +5,7 @@ export default class DatePickerSchema extends FormSchema {
     super()
     this.label = '日期'
     this.placeholder = '请选择'
+    this.default = ''
     this.rules = [{
       required: false,
       message: '必填',

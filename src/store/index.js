@@ -7,7 +7,8 @@ import {
   isArray,
   getSchema,
   getFormData,
-  include
+  include,
+  isPlainObject
 } from '../helper'
 import { modes } from '../constant/static'
 const Vuex = require('vuex')
@@ -96,8 +97,8 @@ export default class Store {
    * update form data
    * @param {Object} model the form data
    */
-  updateModel (model = {}) {
-    this.$$store.commit(this.$$types.$MODEL_SET, { model })
+  updateModel (model = {}, useName = false) {
+    this.$$store.commit(this.$$types.$MODEL_SET, { model, useName })
   }
 
   /**
@@ -355,6 +356,18 @@ export default class Store {
     }
 
     this.$$store.commit(this.$$types.$WIDGET_OPTION_UPDATE, { key, option })
+  }
+
+  /**
+   * update default value
+   * @param {Object} defaults {[schema.key]: defaultValue}
+   */
+  updateWidgetDefault (defaults, useName) {
+    if (!isPlainObject(defaults)) {
+      return
+    }
+
+    this.$$store.commit(this.$$types.$WIDGET_DEFAULT_UPDATE, { defaults, useName })
   }
 
   /**

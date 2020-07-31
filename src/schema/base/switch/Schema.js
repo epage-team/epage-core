@@ -4,6 +4,7 @@ export default class SwitchSchema extends FormSchema {
   constructor (props) {
     super()
     this.label = '开关'
+    this.default = false
     this.rules = [{
       type: 'boolean',
       message: '必填',

@@ -7,6 +7,7 @@ export default class RadioSchema extends FormSchema {
     this.type = 'string'
     this.label = '单选框'
     this.placeholder = '请选择'
+    this.default = ''
     this.option = {
       type: 'static',
       direction: 'horizontal',

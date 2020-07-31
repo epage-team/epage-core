@@ -7,6 +7,7 @@ export default class CascaderSchema extends FormSchema {
     this.type = 'array<string>'
     this.label = '级联选择'
     this.placeholder = '请选择'
+    this.default = []
     this.rules = [{ required: false, message: '必填', type: 'array', trigger: 'change' }]
     this.option = {
       type: 'static',

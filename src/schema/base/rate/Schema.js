@@ -4,6 +4,7 @@ export default class RateSchema extends FormSchema {
   constructor (props) {
     super()
     this.label = '评分'
+    this.default = 0
     this.rules = [{
       required: false,
       message: '必填',

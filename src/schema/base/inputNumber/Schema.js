@@ -5,6 +5,7 @@ export default class InputNumberSchema extends FormSchema {
     super()
     this.label = '数字'
     this.placeholder = '请输入'
+    this.default = 0
     this.rules = [{
       required: false,
       message: '必填',

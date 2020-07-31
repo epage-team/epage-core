@@ -6,6 +6,7 @@ export default class AutoCompleteSchema extends FormSchema {
     super()
     this.label = '自动完成'
     this.placeholder = '请输入'
+    this.default = ''
     this.option = {
       type: 'static',
       url: '',

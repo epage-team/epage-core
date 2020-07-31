@@ -5,6 +5,7 @@ export default class TextareaSchema extends FormSchema {
     super()
     this.label = '多行文本'
     this.placeholder = '请输入'
+    this.default = ''
     this.option = {
       rows: 3
     }

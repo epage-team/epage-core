@@ -5,6 +5,7 @@ export default class UploadSchema extends FormSchema {
     super()
     this.label = '上传'
     this.placeholder = '请选择文件'
+    this.default = []
     this.rules = [{
       required: false,
       message: '必填',

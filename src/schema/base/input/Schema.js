@@ -5,6 +5,7 @@ export default class InputSchema extends FormSchema {
     super()
     this.label = '输入框'
     this.placeholder = '请输入'
+    this.default = ''
     this.option = {
       password: false,
       prefix: '', // 前缀字符

@@ -6,6 +6,7 @@ export default class SelectSchema extends FormSchema {
     super()
     this.label = '下拉框'
     this.placeholder = '请选择'
+    this.default = ''
     this.rules = [{
       required: false,
       message: '必填',

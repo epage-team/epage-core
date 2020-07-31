@@ -6,6 +6,7 @@ export default class CheckboxSchema extends FormSchema {
     super()
     this.type = 'array<string>'
     this.label = '多选框'
+    this.default = []
     this.rules = [{
       required: false,
       message: '必填',

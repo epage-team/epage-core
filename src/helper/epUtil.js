@@ -515,3 +515,20 @@ export function usePlugins (Vue, plugins) {
     Vue.use(plugin)
   })
 }
+
+/**
+ * 转换name为key的model为以schema.key为key的model
+ * @param {Object} name为key的model
+ * @param {Object} 扁平的schema对象
+ */
+export function convertNameModelToKeyModel (model, flatSchemas) {
+  const keyModel = {}
+  for (const key in flatSchemas) {
+    const schema = flatSchemas[key]
+    for (const name in model) {
+      if (schema.name !== name) continue
+      keyModel[key] = model[name]
+    }
+  }
+  return keyModel
+}

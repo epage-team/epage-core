@@ -16,7 +16,8 @@ import {
   getSchemaType,
   getRequiredRuleType,
   getRuleValidator,
-  usePlugins
+  usePlugins,
+  convertNameModelToKeyModel
 } from './epUtil'
 
 import {
@@ -57,6 +58,7 @@ export {
   getRequiredRuleType,
   getRuleValidator,
   usePlugins,
+  convertNameModelToKeyModel,
 
   randomStr,
   isPlainObject,

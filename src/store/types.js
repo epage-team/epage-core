@@ -53,8 +53,10 @@ const list = [
   '$WIDGET_COPY',
   // 更改widget值类型
   '$WIDGET_TYPE_UPDATE',
-  // 设置选中widget option
+  // 设置widget option
   '$WIDGET_OPTION_UPDATE',
+  // 更新表单类型widget默认值
+  '$WIDGET_DEFAULT_UPDATE',
   // 选中widget
   '$WIDGET_SELECT',
   // 取消选中widget

@@ -15,7 +15,8 @@ import {
   isNotEmptyString,
   checkValueType,
   getWidgetModel,
-  updateRequiredRule
+  updateRequiredRule,
+  convertNameModelToKeyModel
 } from '../helper'
 
 const logic = new Logic()
@@ -135,11 +136,16 @@ export default class StoreConf {
         },
 
         // 设置表单model，即用户填写的表单数据
-        [types.$MODEL_SET] (state, { model }) {
-          const _model = {}
-          const conbinedModel = Object.assign({}, state.model, model)
+        [types.$MODEL_SET] (state, { model, useName }) {
           const { flatSchemas } = state
           const { flatWidgets } = this.getters
+          const _model = {}
+          let keyModel = model // 以schema.key为key组成的model对象
+
+          if (useName) {
+            keyModel = convertNameModelToKeyModel(model, flatSchemas)
+          }
+          const conbinedModel = Object.assign({}, state.model, keyModel)
 
           for (const i in conbinedModel) {
             const schema = flatSchemas[i]
@@ -337,7 +343,7 @@ export default class StoreConf {
           }
         },
 
-        // 设计模式修改选中一个widget的option
+        // 修改widget的option
         [types.$WIDGET_OPTION_UPDATE] ({ flatSchemas }, { key, option }) {
           const schema = flatSchemas[key]
 
@@ -345,6 +351,18 @@ export default class StoreConf {
             return
           }
           schema.option = Object.assign({ ...schema.option }, option)
+        },
+
+        // 修改表单类型widget默认值
+        [types.$WIDGET_DEFAULT_UPDATE] ({ flatSchemas }, { defaults, useName }) {
+          let keyModel = defaults
+          if (useName) {
+            keyModel = convertNameModelToKeyModel(defaults, flatSchemas)
+          }
+          const keys = Object.keys(keyModel).filter(key => !!flatSchemas[key])
+          keys.forEach(key => {
+            flatSchemas[key].default = keyModel[key]
+          })
         },
 
         // 设计模式选中一个widget

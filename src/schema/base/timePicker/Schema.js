@@ -5,6 +5,7 @@ export default class TimePickerSchema extends FormSchema {
     super()
     this.label = '时间'
     this.placeholder = '请选择'
+    this.default = ''
     this.rules = [{
       required: false,
       message: '必填',
