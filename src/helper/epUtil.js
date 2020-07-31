@@ -6,7 +6,8 @@ import {
   isFunction,
   include,
   jsonClone,
-  checkValueType
+  checkValueType,
+  formatDate
 } from './util'
 import TypeBuilder from '../store/TypeBuilder'
 
@@ -531,4 +532,38 @@ export function convertNameModelToKeyModel (model, flatSchemas) {
     }
   }
   return keyModel
+}
+
+/**
+ * 根据schema.default默认值处理为最终可用默认值
+ * @param {Schema} schema
+ */
+export function cleanDefaultValue(schema) {
+  const { widget, option = {}, default: defaultValue } = schema
+  const { format, range } = option
+  let result = defaultValue
+
+  if ("default" in schema) {
+    switch (widget) {
+      case 'datePicker':
+        if (defaultValue === 'usedate') {
+          const date = formatDate(new Date(), format)
+          result = range ? [date, date] : date
+        } else {
+          result = defaultValue
+        }
+        break
+      case 'timePicker':
+        if (defaultValue === 'usetime') {
+          const time = formatDate(new Date(), format)
+          result = range ? [time, time] : time
+        } else {
+          result = defaultValue
+        }
+        break
+      default:
+        result = defaultValue
+    }
+  }
+  return result
 }

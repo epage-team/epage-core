@@ -16,7 +16,8 @@ import {
   checkValueType,
   getWidgetModel,
   updateRequiredRule,
-  convertNameModelToKeyModel
+  convertNameModelToKeyModel,
+  cleanDefaultValue
 } from '../helper'
 
 const logic = new Logic()
@@ -105,7 +106,8 @@ export default class StoreConf {
         // 添加全局schema，会重新修改store中model数据
         [types.$ROOT_SCHEMA_SET] (state, { rootSchema }) {
           const { flatWidgets } = this.getters
-          const model = {}
+          const model = {} // 最终值
+          const defaultModel = {} // 根据schema实例定义的默认值
           const _rootSchema = new RootSchema({ schema: rootSchema, widgets: flatWidgets })
 
           // 初始化 model
@@ -115,16 +117,18 @@ export default class StoreConf {
 
           // 遍历schema获取model默认值
           for (const i in state.flatSchemas) {
+            const schema = state.flatSchemas[i]
+            // 特殊默认值需要处理，尤其动态时间值
+            defaultModel[i] = cleanDefaultValue(schema)
             if (!(i in state.model)) {
-              const schema = state.flatSchemas[i]
               // 容器widget不保留model值
               if (schema.container) {
                 continue
               }
               const type = getWidgetType(flatWidgets, schema.widget)
-              const widgetModel = getWidgetModel(type, schema, typeBuilder)
+              const widgetModel = getWidgetModel(type, schema, typeBuilder) // 缺省值
 
-              Object.assign(model, widgetModel)
+              Object.assign(model, widgetModel, defaultModel)
             }
           }
           this.commit(types.$MODEL_SET, { model })
