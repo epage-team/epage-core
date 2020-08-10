@@ -15,7 +15,8 @@ export default class ButtonSchema extends BaseSchema {
       // 是否幽灵按钮
       ghost: false,
       // 形状，可选 'square': 方角；'circle': 圆角
-      shape: 'square'
+      shape: 'square',
+      script: ''
     }
     this.create(props)
   }

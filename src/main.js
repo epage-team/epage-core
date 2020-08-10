@@ -3,6 +3,8 @@ import Rule from './rule'
 import Event from './event'
 import Store from './store'
 import Logic from './logic'
+import Context from './context'
+import Script from './script'
 import TypeBuilder from './store/TypeBuilder'
 import * as helper from './helper'
 import * as constant from './constant'
@@ -13,6 +15,8 @@ export {
   Event,
   Store,
   Logic,
+  Context,
+  Script,
   TypeBuilder,
   helper,
   constant,

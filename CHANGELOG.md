@@ -1,5 +1,27 @@
 # Change Log
 
+### 0.1.5（2020/08/10）
+
+- [feat] : 增加`Context`及`Scirpt`模块，方便在自定义脚本中增加context环境
+
+```js
+import { Context, Script } from 'epage-core'
+const { $render } = this.$root.$options.extension
+const { script } = this.schema.option
+const ctx = new Context({
+  $el,
+  $render,
+  store,
+  instance: this,
+  state: {
+    loading: this.loading
+  }
+})
+const sc = new Script(ctx)
+sc.exec(script)
+```
+
+
 ### 0.1.4（2020/08/01）
 
 - [feat] : 添加基础widget默认值

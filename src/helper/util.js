@@ -124,7 +124,7 @@ export function isNumberString (value) {
   if (typeof value !== 'string') {
     return false
   }
-  return /^-?\d+(.\d+)?$/.test(value)
+  return /^[-+]?\d+(.\d+)?$/.test(value)
 }
 
 /**
