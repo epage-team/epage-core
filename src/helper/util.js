@@ -71,7 +71,22 @@ export function checkValueType (value, expectedType, dynamic) {
         return checkValueTypeWithStringExpectedType(value, expectedType)
       }
     } else {
-      return isArray(expectedType) ? include(expectedType, type) : type === expectedType
+      function checkExpectedType(expectedType, type) {
+        const map = {
+          string: ['json'],
+          number: ['json'],
+          boolean: ['json'],
+          object: ['json'],
+          array: ['json'],
+          'null': ['json']
+        }
+        if (isArray(expectedType)) {
+          return include(expectedType, type) || !!expectedType.filter(t => include(map[type], t)).length
+        } else {
+          return type === expectedType || include(map[type], expectedType)
+        }
+      }
+      return checkExpectedType(expectedType, type)
     }
   }
 }

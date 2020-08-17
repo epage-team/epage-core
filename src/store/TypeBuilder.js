@@ -15,6 +15,7 @@ export default class TypeBuilder {
       object: () => ({}),
       null: () => null,
       date: () => new Date(),
+      json: () => '{}',
       // composition type
       'array<date>': () => [],
       'array<string>': () => [],
@@ -55,7 +56,14 @@ TypeBuilder.convert = {
   },
   number2boolean: n => !!n,
   boolean2string: b => String(b),
-  boolean2number: b => Number(b)
+  boolean2number: b => Number(b),
+  string2json: s => {
+    try {
+      return JSON.parse(s)
+    } catch (e) {
+      return null
+    }
+  }
 }
 
 /**

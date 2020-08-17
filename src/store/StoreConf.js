@@ -7,6 +7,7 @@ import {
   flattenSchema,
   isFunction,
   isArray,
+  isString,
   include,
   getParentListByKey,
   getIndexByKey,
@@ -157,11 +158,17 @@ export default class StoreConf {
             if (!schema) {
               continue
             }
+
             const Widget = flatWidgets[schema.widget]
 
             if (!Widget || !isFunction(Widget.Schema)) {
               continue
             }
+
+            if (schema.type === 'json' && !isString(conbinedModel[i])) {
+              conbinedModel[i] = JSON.stringify(conbinedModel[i])
+            }
+
             if (checkValueType(conbinedModel[i], Widget.Schema.type, schema.dynamic)) {
               _model[i] = conbinedModel[i]
             }

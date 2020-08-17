@@ -42,7 +42,7 @@ export function getRootSchemaChildren (schema) {
  */
 export function getFormData (model, rootSchema) {
   const formData = {}
-  const baseTypes = ['string', 'number', 'boolean']
+  const baseTypes = ['string', 'number', 'boolean', 'json']
   const convert = (t1, t2, v) => {
     if (include(baseTypes, t1) && include(baseTypes, t2)) {
       return t1 === t2 ? v : TypeBuilder.convert[`${t1}2${t2}`](v)
