@@ -78,7 +78,8 @@ export function checkValueType (value, expectedType, dynamic) {
           boolean: ['json'],
           object: ['json'],
           array: ['json'],
-          'null': ['json']
+          'null': ['json'],
+          'undefined': [],
         }
         if (isArray(expectedType)) {
           return include(expectedType, type) || !!expectedType.filter(t => include(map[type], t)).length
