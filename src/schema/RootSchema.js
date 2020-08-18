@@ -36,7 +36,7 @@ export default class RootSchema extends Schema {
       'background-repeat': '',
       'background-position': '',
       'max-width': '1600px',
-      'min-width': '800px'
+      'min-width': ''
     }
 
     this.create(props)
