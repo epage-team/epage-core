@@ -12,7 +12,7 @@ export default {
   rate: require('./rate').default,
   select: require('./select').default,
   slider: require('./slider').default,
-  subTable: require('./subTable').default,
+  table: require('./table').default,
   switch: require('./switch').default,
   textarea: require('./textarea').default,
   timePicker: require('./timePicker').default,

@@ -1,6 +1,6 @@
 import BaseSchema from '../../BaseSchema'
 
-export default class SubTableSchema extends BaseSchema {
+export default class TableSchema extends BaseSchema {
   constructor (props) {
     super()
     this.label = '表格'
@@ -17,7 +17,7 @@ export default class SubTableSchema extends BaseSchema {
         current: 1,
         size: 10,
         showTotal: true,
-        position: 'left'
+        position: 'right'
       },
       data: [],
       dynamicData: [],
@@ -28,9 +28,9 @@ export default class SubTableSchema extends BaseSchema {
 }
 
 // 静态配置，同类widget公有
-Object.assign(SubTableSchema, {
-  title: '子表',
-  widget: 'subTable',
+Object.assign(TableSchema, {
+  title: '表格',
+  widget: 'table',
   icon: 'ios-grid-view',
   type: 'array',
   logic: {
