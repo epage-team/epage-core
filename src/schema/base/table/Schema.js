@@ -32,9 +32,8 @@ Object.assign(TableSchema, {
   title: '表格',
   widget: 'table',
   icon: 'ios-grid-view',
-  type: 'array',
   logic: {
-    value: [],
-    event: []
+    // value: [],
+    // event: []
   }
 })
