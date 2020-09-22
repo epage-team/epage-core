@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.1.8（2020/09/22）
+
+- [fix] : 修复包内部import依赖大小写问题 [epage#8](https://github.com/didi/epage/issues/8)
+
 ### 0.1.7（2020/08/18）
 
 - [fix] : 修复上个版本增加`json`类型忽略`undefined`情况导致渲染报错

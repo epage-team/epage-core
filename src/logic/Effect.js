@@ -1,4 +1,4 @@
-import Properties from './properties'
+import Properties from './Properties'
 
 export default class Effect {
   constructor () {
