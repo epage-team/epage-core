@@ -22,7 +22,6 @@ import {
   getDefaults
 } from '../helper'
 
-const logic = new Logic()
 const typeBuilder = new TypeBuilder()
 const rootSchema = new RootSchema()
 const selectedSchema = defaultSchema()
@@ -198,6 +197,7 @@ export default class StoreConf {
         // value logic改变影响 widget 属性改变
         [types.$WIDGET_UPDATE_BY_VALUE_LOGIC] (state, { model }) {
           const valueLogics = state.rootSchema.logics.filter(logic => logic.key && logic.type === 'value')
+          const logic = new Logic(state.defaults)
           const patches = logic.diffValueLogics(valueLogics, model)
 
           logic.applyPatches(state.flatSchemas, patches)
@@ -207,6 +207,7 @@ export default class StoreConf {
         [types.$WIDGET_UPDATE_BY_EVENT_LOGIC] (state, { key, eventType }) {
           // key 为当前触发的widget key
           const eventLogics = state.rootSchema.logics.filter(logic => logic.key === key && logic.type === 'event')
+          const logic = new Logic(state.defaults)
           const patches = logic.diffEventLogics(eventLogics, eventType)
 
           logic.applyPatches(state.flatSchemas, patches)

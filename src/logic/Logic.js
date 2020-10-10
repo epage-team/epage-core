@@ -2,7 +2,8 @@ import EventLogic from './EventLogic'
 import ValueLogic from './ValueLogic'
 
 export default class Logic {
-  constructor () {
+  constructor (defaults) {
+    this.defaults = defaults || {}
     this.map = {
       event: new EventLogic(),
       value: new ValueLogic()
@@ -32,10 +33,6 @@ export default class Logic {
         }
         const validation = valueValidator.validator(model[i], logic.value)
         const patch = {}
-        // validate faild
-        if (!validation) {
-          continue
-        }
 
         for (let k = 0; k < logic.effects.length; k++) {
           const effect = logic.effects[k]
@@ -44,10 +41,20 @@ export default class Logic {
           if (!this.checkEffect(effect, logic.key)) {
             continue
           }
+          const effectDefault = this.defaults[effect.key] || {}
 
-          effect.properties.forEach(_ => {
-            props[_.key] = _.value
-          })
+          if (validation) {
+            effect.properties.forEach(_ => {
+              props[_.key] = _.value
+            })
+          // 校验失败使用默认值
+          } else {
+            effect.properties.forEach(_ => {
+              if (_.key in effectDefault) {
+                props[_.key] = effectDefault[_.key]
+              }
+            })
+          }
           patch[effect.key] = props
         }
         Object.keys(patch).length && patches.push(patch)
