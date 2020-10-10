@@ -1,6 +1,7 @@
-import { modes } from './static'
+import { modes, defaultProps } from './static'
 
 export { default as defaultSchema } from './default-schema'
 export {
-  modes
+  modes,
+  defaultProps
 }

@@ -18,7 +18,8 @@ import {
   getRuleValidator,
   usePlugins,
   convertNameModelToKeyModel,
-  cleanDefaultValue
+  cleanDefaultValue,
+  getDefaults
 } from './epUtil'
 
 import {
@@ -61,6 +62,7 @@ export {
   usePlugins,
   convertNameModelToKeyModel,
   cleanDefaultValue,
+  getDefaults,
 
   randomStr,
   isPlainObject,

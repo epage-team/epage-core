@@ -37,6 +37,8 @@ const list = [
   // 删除widget规则
   '$RULE_REMOVE',
 
+  // 更新widget默认属性
+  '$WIDGET_DEFAULT_PROPS_UPDATE',
   // 通过值逻辑关系触发的widget属性改变
   '$WIDGET_UPDATE_BY_VALUE_LOGIC',
   // 通过事件逻辑关系触发的widget属性改变

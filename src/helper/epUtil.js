@@ -567,3 +567,26 @@ export function cleanDefaultValue(schema) {
   }
   return result
 }
+
+/**
+ * 获取所有schema指定字段的默认值
+ * @param {Object} flatSchemas 
+ * @param {Object} props ['value', ...]
+ */
+export function getDefaults (flatSchemas, props = []) {
+  const result = {}
+  for (const key in flatSchemas) {
+    const schema = flatSchemas[key]
+    result[key] = {}
+    for (const prop in schema) {
+      const item = schema[prop]
+      if (props.indexOf(prop) === -1) continue
+      if (typeof item === 'object') {
+        result[key][prop] = jsonClone(item)
+      } else {
+        result[key][prop] = item
+      }
+    }
+  }
+  return result
+}

@@ -1,6 +1,6 @@
 import types from './types'
 import TypeBuilder from './TypeBuilder'
-import { defaultSchema } from '../constant'
+import { defaultSchema, defaultProps } from '../constant'
 import RootSchema from '../schema/RootSchema'
 import Logic from '../logic'
 import {
@@ -18,7 +18,8 @@ import {
   getWidgetModel,
   updateRequiredRule,
   convertNameModelToKeyModel,
-  cleanDefaultValue
+  cleanDefaultValue,
+  getDefaults
 } from '../helper'
 
 const logic = new Logic()
@@ -41,7 +42,14 @@ export default class StoreConf {
         // 拍平所有schema
         flatSchemas: {},
         // 拍平所有规则
-        flatRules: {}
+        flatRules: {},
+        // 运行时状态
+        // { [key]: { hide: false, readonly: false }}
+        defaults: {},
+        database: {
+          baseURL: '',
+          dict: []
+        }
       },
       getters: {
         isSelected: state => !!state.selectedSchema.key,
@@ -133,6 +141,7 @@ export default class StoreConf {
             }
           }
           this.commit(types.$MODEL_SET, { model })
+          this.commit(types.$WIDGET_DEFAULT_PROPS_UPDATE)
         },
 
         // 添加表单展示模式
@@ -179,6 +188,11 @@ export default class StoreConf {
         // 配置供展示的所有widget列表
         [types.$WIDGETS_SET] (state, { widgets }) {
           state.widgets = widgets
+        },
+
+        // 更新所有widget默认属性，在new Render时调用
+        [types.$WIDGET_DEFAULT_PROPS_UPDATE] (state) {
+          state.defaults = getDefaults(state.flatSchemas, defaultProps())
         },
 
         // value logic改变影响 widget 属性改变
