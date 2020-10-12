@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.2.0（2020/10/12）
+
+- [feat] : 增加widget显隐属性默认值，逻辑配置面板，不符合条件时回退到默认值
+- [feat] : 逻辑配置面板，可配置自定义脚本，可直接使用ctx全局变量，关于ctx可参考button的[ctx](http://epage.didichuxing.com/examples/widgets/button.html#schema-option%E5%AE%9A%E4%B9%89)
+
 ### 0.1.8（2020/09/22）
 
 - [fix] : 修复包内部import依赖大小写问题 [epage#8](https://github.com/didi/epage/issues/8)
