@@ -118,6 +118,12 @@ export default class StoreConf {
           const defaultModel = {} // 根据schema实例定义的默认值
           const _rootSchema = new RootSchema({ schema: rootSchema, widgets: flatWidgets })
 
+          // fix logic field
+          _rootSchema.logics.map(logic => {
+            logic.trigger = logic.trigger || 'prop'
+            logic.script = logic.script || ''
+          })
+
           // 初始化 model
           state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
           this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: state.rootSchema })
@@ -195,22 +201,24 @@ export default class StoreConf {
         },
 
         // value logic改变影响 widget 属性改变
-        [types.$WIDGET_UPDATE_BY_VALUE_LOGIC] (state, { model }) {
+        [types.$WIDGET_UPDATE_BY_VALUE_LOGIC] (state, { model, callback }) {
           const valueLogics = state.rootSchema.logics.filter(logic => logic.key && logic.type === 'value')
           const logic = new Logic(state.defaults)
-          const patches = logic.diffValueLogics(valueLogics, model)
+          const { patches, scripts } = logic.diffValueLogics(valueLogics, model)
 
           logic.applyPatches(state.flatSchemas, patches)
+          isFunction(callback) && callback(scripts)
         },
 
         // event logic改变影响 widget 属性改变
-        [types.$WIDGET_UPDATE_BY_EVENT_LOGIC] (state, { key, eventType }) {
+        [types.$WIDGET_UPDATE_BY_EVENT_LOGIC] (state, { key, eventType, callback }) {
           // key 为当前触发的widget key
           const eventLogics = state.rootSchema.logics.filter(logic => logic.key === key && logic.type === 'event')
           const logic = new Logic(state.defaults)
-          const patches = logic.diffEventLogics(eventLogics, eventType)
+          const { patches, scripts } = logic.diffEventLogics(eventLogics, eventType)
 
           logic.applyPatches(state.flatSchemas, patches)
+          isFunction(callback) && callback(scripts)
         },
 
         // 设计模式向表单添加一个widget，schema为此widget对应的默认schema

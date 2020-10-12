@@ -17,34 +17,44 @@ export default class Logic {
    */
   diffValueLogics (valueLogics, model) {
     const patches = []
+    const scripts = []
 
     for (let j = 0; j < valueLogics.length; j++) {
       const logic = valueLogics[j]
       const valueValidator = this.map.value.map[logic.action]
+      const validation = valueValidator.validator(model[logic.key], logic.value)
 
       if (!valueValidator) continue
-
+      if (!validation) continue
       // should be the same key
       if (!(logic.key in model)) continue
+      
+      switch (logic.trigger) {
+        case 'script':
+          logic.script && scripts.push(logic.script)
+          break
+        case 'prop':
+          const patch = {}
 
-      const validation = valueValidator.validator(model[logic.key], logic.value)
-      const patch = {}
+          for (let k = 0; k < logic.effects.length; k++) {
+            const effect = logic.effects[k]
+            const props = {}
 
-      for (let k = 0; k < logic.effects.length; k++) {
-        const effect = logic.effects[k]
-        const props = {}
+            if (!this.checkEffect(effect, logic.key)) continue
 
-        if (!this.checkEffect(effect, logic.key)) continue
-        if (!validation) continue
-
-        effect.properties.forEach(_ => {
-          props[_.key] = _.value
-        })
-        patch[effect.key] = props
+            effect.properties.forEach(_ => {
+              props[_.key] = _.value
+            })
+            patch[effect.key] = props
+          }
+          Object.keys(patch).length && patches.push(patch)
+          break
+        default:
+          break
       }
-      Object.keys(patch).length && patches.push(patch)
+
     }
-    return patches
+    return { patches, scripts }
   }
 
   /**
@@ -54,33 +64,40 @@ export default class Logic {
    */
   diffEventLogics (eventLogics, eventType) {
     const patches = []
+    const scripts = []
 
     for (let i = 0; i < eventLogics.length; i++) {
       const logic = eventLogics[i]
-      const patch = {}
-      // get event type: on-click => click
-      if (logic.action !== eventType.slice(3)) {
-        continue
+
+      switch (logic.trigger) {
+        case 'script':
+          logic.script && scripts.push(logic.script)
+          break
+        case 'prop':
+          const patch = {}
+          // get event type: on-click => click
+          if (logic.action !== eventType.slice(3)) continue
+
+          for (let j = 0; j < logic.effects.length; j++) {
+            const effect = logic.effects[j]
+            const props = {}
+
+            if (!this.checkEffect(effect, logic.key)) continue
+
+            effect.properties.forEach(_ => {
+              props[_.key] = _.value
+            })
+            patch[effect.key] = props
+          }
+
+          Object.keys(patch).length && patches.push(patch)
+          break
+        default:
+          break
       }
-
-      for (let j = 0; j < logic.effects.length; j++) {
-        const effect = logic.effects[j]
-        const props = {}
-
-        if (!this.checkEffect(effect, logic.key)) {
-          continue
-        }
-
-        effect.properties.forEach(_ => {
-          props[_.key] = _.value
-        })
-        patch[effect.key] = props
-      }
-
-      Object.keys(patch).length && patches.push(patch)
     }
 
-    return patches
+    return { patches, scripts }
   }
 
   /**

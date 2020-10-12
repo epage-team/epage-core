@@ -44,6 +44,8 @@ export default class ValueLogic {
       key: '',
       action: '',
       value: '',
+      trigger: 'prop', // prop | script
+      script: '',
       effects: [new Effect()]
     }
   }

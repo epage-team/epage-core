@@ -19,7 +19,8 @@ export default class EventLogic {
       key: '',
       // event type: click | change or others
       action: '',
-
+      trigger: 'prop', // prop | script
+      script: '',
       effects: [new Effect()]
     }
   }

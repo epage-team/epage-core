@@ -415,8 +415,8 @@ export default class Store {
    * trigger other widget props changes based on value changes
    * @param {Object} model the form data
    */
-  updateWidgetByModel (model) {
-    this.$$store.commit(this.$$types.$WIDGET_UPDATE_BY_VALUE_LOGIC, { model })
+  updateWidgetByModel (model, callback) {
+    this.$$store.commit(this.$$types.$WIDGET_UPDATE_BY_VALUE_LOGIC, { model, callback })
   }
 
   /**
@@ -424,8 +424,8 @@ export default class Store {
    * @param {String} key the unique key of widget
    * @param {String} eventType event type, looks like click | change | blur and etc.
    */
-  updateWidgetByEvent (key, eventType) {
-    this.$$store.commit(this.$$types.$WIDGET_UPDATE_BY_EVENT_LOGIC, { key, eventType })
+  updateWidgetByEvent (key, eventType, callback) {
+    this.$$store.commit(this.$$types.$WIDGET_UPDATE_BY_EVENT_LOGIC, { key, eventType, callback })
   }
 
   /**
