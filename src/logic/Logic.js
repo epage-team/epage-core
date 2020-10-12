@@ -22,45 +22,28 @@ export default class Logic {
       const logic = valueLogics[j]
       const valueValidator = this.map.value.map[logic.action]
 
-      if (!valueValidator) {
-        continue
+      if (!valueValidator) continue
+
+      // should be the same key
+      if (!(logic.key in model)) continue
+
+      const validation = valueValidator.validator(model[logic.key], logic.value)
+      const patch = {}
+
+      for (let k = 0; k < logic.effects.length; k++) {
+        const effect = logic.effects[k]
+        const props = {}
+
+        if (!this.checkEffect(effect, logic.key)) continue
+        if (!validation) continue
+
+        effect.properties.forEach(_ => {
+          props[_.key] = _.value
+        })
+        patch[effect.key] = props
       }
-
-      for (const i in model) {
-        // should be the same key
-        if (i !== logic.key) {
-          continue
-        }
-        const validation = valueValidator.validator(model[i], logic.value)
-        const patch = {}
-
-        for (let k = 0; k < logic.effects.length; k++) {
-          const effect = logic.effects[k]
-          const props = {}
-
-          if (!this.checkEffect(effect, logic.key)) {
-            continue
-          }
-          const effectDefault = this.defaults[effect.key] || {}
-
-          if (validation) {
-            effect.properties.forEach(_ => {
-              props[_.key] = _.value
-            })
-          // 校验失败使用默认值
-          } else {
-            effect.properties.forEach(_ => {
-              if (_.key in effectDefault) {
-                props[_.key] = effectDefault[_.key]
-              }
-            })
-          }
-          patch[effect.key] = props
-        }
-        Object.keys(patch).length && patches.push(patch)
-      }
+      Object.keys(patch).length && patches.push(patch)
     }
-
     return patches
   }
 
@@ -106,11 +89,19 @@ export default class Logic {
    * @param {Array} patches properties that should be updated
    */
   applyPatches (flatSchemas, patches = []) {
+    const propsMerged = {}
     patches.forEach(patch => {
       for (const key in patch) {
-        Object.assign(flatSchemas[key], patch[key])
+        if (!(key in flatSchemas)) continue
+        propsMerged[key] = propsMerged[key] || {}
+        Object.assign(propsMerged[key], patch[key])
       }
     })
+
+    const result = Object.assign({}, this.defaults, propsMerged)
+    for (const key in result) {
+      Object.assign(flatSchemas[key], this.defaults[key], result[key])
+    }
   }
 
   /**
