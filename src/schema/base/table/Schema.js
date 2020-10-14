@@ -31,7 +31,7 @@ export default class TableSchema extends BaseSchema {
 Object.assign(TableSchema, {
   title: '表格',
   widget: 'table',
-  icon: 'ios-grid-view',
+  preview: '',
   logic: {
     // value: [],
     // event: []

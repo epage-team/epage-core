@@ -23,7 +23,7 @@ export default class TimePickerSchema extends FormSchema {
 Object.assign(TimePickerSchema, {
   title: '时间选择',
   widget: 'timePicker',
-  icon: 'ios-clock-outline',
+  preview: '',
   type: ['string', 'array<string>'],
   validators: [],
   logic: {

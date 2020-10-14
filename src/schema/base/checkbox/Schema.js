@@ -36,7 +36,7 @@ export default class CheckboxSchema extends FormSchema {
 Object.assign(CheckboxSchema, {
   title: '多选框',
   widget: 'checkbox',
-  icon: 'android-checkbox-outline',
+  preview: '',
   type: ['array<string>', 'array<number>'],
   validators: [],
   logic: {

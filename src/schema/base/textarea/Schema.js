@@ -17,7 +17,7 @@ export default class TextareaSchema extends FormSchema {
 Object.assign(TextareaSchema, {
   title: '多行文本',
   widget: 'textarea',
-  icon: 'compose',
+  preview: '',
   type: 'string',
   validators: ['string', 'email', 'url', 'pattern'],
   logic: {

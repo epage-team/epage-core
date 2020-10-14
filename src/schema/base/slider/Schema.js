@@ -13,7 +13,7 @@ export default class SliderSchema extends FormSchema {
 Object.assign(SliderSchema, {
   title: '滑块',
   widget: 'slider',
-  icon: 'minus-round',
+  preview: '',
   type: 'number',
   validators: 'number',
   logic: {

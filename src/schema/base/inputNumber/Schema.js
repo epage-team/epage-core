@@ -26,7 +26,7 @@ export default class InputNumberSchema extends FormSchema {
 Object.assign(InputNumberSchema, {
   title: '数字框',
   widget: 'inputNumber',
-  icon: 'ios-calculator',
+  preview: '',
   type: 'number',
   validators: [],
   logic: {

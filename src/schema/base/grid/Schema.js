@@ -70,7 +70,7 @@ export default class GridSchema extends BaseSchema {
 Object.assign(GridSchema, {
   title: '栅格',
   widget: 'grid',
-  icon: 'grid',
+  preview: '',
   logic: {
     value: [],
     event: []

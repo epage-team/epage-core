@@ -25,7 +25,7 @@ export default class RateSchema extends FormSchema {
 Object.assign(RateSchema, {
   title: '评分',
   widget: 'rate',
-  icon: 'ios-star',
+  preview: '',
   type: 'number',
   validators: [],
   logic: {

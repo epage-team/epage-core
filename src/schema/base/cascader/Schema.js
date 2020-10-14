@@ -42,7 +42,7 @@ export default class CascaderSchema extends FormSchema {
 Object.assign(CascaderSchema, {
   title: '级联选择',
   widget: 'cascader',
-  icon: 'ios-more-outline',
+  preview: '',
   type: ['array<string>', 'array<number>'],
   validators: [],
   logic: {

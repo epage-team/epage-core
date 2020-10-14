@@ -31,7 +31,7 @@ export default class RadioSchema extends FormSchema {
 Object.assign(RadioSchema, {
   title: '单选框',
   widget: 'radio',
-  icon: 'android-radio-button-on',
+  preview: '',
   type: ['string', 'number'],
   validators: [],
   logic: {

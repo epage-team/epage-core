@@ -26,7 +26,7 @@ export default class ButtonSchema extends BaseSchema {
 Object.assign(ButtonSchema, {
   title: '按钮',
   widget: 'button',
-  icon: 'social-youtube-outline',
+  preview: '',
   logic: {
     value: null,
     event: ['click']

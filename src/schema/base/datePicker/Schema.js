@@ -23,7 +23,7 @@ export default class DatePickerSchema extends FormSchema {
 Object.assign(DatePickerSchema, {
   title: '日期选择',
   widget: 'datePicker',
-  icon: 'ios-calendar-outline',
+  preview: '',
   type: ['string', 'array<string>'],
   validators: [],
   logic: {

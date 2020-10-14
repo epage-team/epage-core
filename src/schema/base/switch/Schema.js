@@ -23,7 +23,7 @@ export default class SwitchSchema extends FormSchema {
 Object.assign(SwitchSchema, {
   title: '开关',
   widget: 'switch',
-  icon: 'toggle',
+  preview: '',
   type: 'boolean',
   validators: [],
   logic: {

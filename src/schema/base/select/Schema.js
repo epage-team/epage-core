@@ -37,7 +37,7 @@ export default class SelectSchema extends FormSchema {
 Object.assign(SelectSchema, {
   title: '下拉框',
   widget: 'select',
-  icon: 'ios-arrow-down',
+  preview: '',
   type: ['string', 'number', 'array', 'array<string>', 'array<number>'],
   validators: [],
   logic: {

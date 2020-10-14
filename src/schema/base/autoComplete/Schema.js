@@ -28,7 +28,7 @@ export default class AutoCompleteSchema extends FormSchema {
 Object.assign(AutoCompleteSchema, {
   title: '自动完成',
   widget: 'autoComplete',
-  icon: 'ios-list-outline',
+  preview: '',
   type: 'string',
   validators: [],
   logic: {

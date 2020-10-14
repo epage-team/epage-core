@@ -48,7 +48,7 @@ export default class UploadSchema extends FormSchema {
 Object.assign(UploadSchema, {
   title: '上传',
   widget: 'upload',
-  icon: 'ios-cloud-upload-outline',
+  preview: '',
   type: 'array',
   validators: [],
   logic: {

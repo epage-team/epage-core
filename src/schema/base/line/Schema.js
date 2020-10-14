@@ -22,7 +22,7 @@ export default class LineSchema extends BaseSchema {
 Object.assign(LineSchema, {
   title: '线条',
   widget: 'line',
-  icon: 'ios-pause',
+  preview: '',
   logic: {
     value: null,
     event: null

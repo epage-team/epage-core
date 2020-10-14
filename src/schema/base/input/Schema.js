@@ -19,7 +19,7 @@ export default class InputSchema extends FormSchema {
 Object.assign(InputSchema, {
   title: '单行文本',
   widget: 'input',
-  icon: 'edit',
+  preview: '',
   type: 'string',
   validators: ['string', 'email', 'url', 'pattern'],
   logic: {
