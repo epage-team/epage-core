@@ -2,6 +2,7 @@ export default class Dict {
   constructor (props) {
     const {
       name = '',
+      desc = '',
       headers = {},
       body = {},
       query = {},
@@ -12,6 +13,7 @@ export default class Dict {
     } = props || {}
  
     this.name = name
+    this.desc = desc
     this.headers = headers
     this.body = body
     this.query = query
@@ -26,9 +28,13 @@ export default class Dict {
   }
   getData () {
     const { url, body, headers, method, adapter } = this
-    if (!url || url.indexOf(':') > -1) return Promise.reject(new Error('invalid url!'))
-    const urlObj = this.resolveURL(url, {})
-    const queryString = this.joinQuery()
+    if (!url) return Promise.reject(new Error('invalid url!'))
+    const urlObj = this.resolveURL(url, this.params)
+    let queryString = this.joinQuery()
+
+    if (queryString.charAt(0) === '&') {
+      queryString = queryString.slice(1)
+    }
 
     if (!urlObj.valid) return Promise.reject(urlObj.message)
     const option = { headers, method }
@@ -81,7 +87,7 @@ export default class Dict {
     return keys.map((key, index) => `&${key}=${index}`).join('') 
   }
 
-  getFormat (data, num = 0, loop = 1) {
+  getFormat (data, num = 2, loop = 1) {
     let type = Object.prototype.toString.call(data).split(' ')[1].split(']')[0].toLowerCase()
     let format = ''
     const space = new Array(num * loop + 1).join(' ')
