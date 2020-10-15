@@ -11,7 +11,7 @@ export default class Dict {
       method = 'GET',
       adapter = ''
     } = props || {}
- 
+
     this.name = name
     this.desc = desc
     this.headers = headers
@@ -29,20 +29,26 @@ export default class Dict {
   getData () {
     const { url, body, headers, method, adapter } = this
     if (!url) return Promise.reject(new Error('invalid url!'))
+
     const urlObj = this.resolveURL(url, this.params)
-    let queryString = this.joinQuery()
-
-    if (queryString.charAt(0) === '&') {
-      queryString = queryString.slice(1)
-    }
-
     if (!urlObj.valid) return Promise.reject(urlObj.message)
+
+    let queryString = this.joinQuery()
+    let resolvedURL = urlObj.url
     const option = { headers, method }
-    if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT') {
+    const METHOD = method.toUpperCase()
+    const withBodyMethods = ['POST', 'PUT']
+    if (withBodyMethods.indexOf(METHOD) > -1) {
       option.body = JSON.stringify(body)
     }
+    if (urlObj.widthQuery) {
+      resolvedURL += queryString
+    } else  {
+      queryString = queryString.slice(1)
+      resolvedURL += `?${queryString}`
+    }
 
-    return fetch(`${urlObj.url}?${queryString}`, option).then(res => {
+    return fetch(resolvedURL, option).then(res => {
       try {
         return res.json()
       } catch(err) {
@@ -58,10 +64,11 @@ export default class Dict {
   }
 
   resolveURL (url = '', model = {}) {
-    const names = (url.match(/\:[^:\s\/]+/g) || []).map(_ => _.split(':')[1])
+    const names = (url.match(/\/\:[^:\s\/\?\&]+/g) || []).map(_ => _.split(':')[1])
     const result = {
       valid: true,
       message: '',
+      widthQuery: false,
       url
     }
     let isValidURL = names.filter(name => {
@@ -79,12 +86,14 @@ export default class Dict {
     names.forEach(name => {
       result.url = result.url.replace(new RegExp(`\B?:${name}\B?`, 'g'), model[name])
     })
+    result.url = result.url.replace(/(&|\?)+$/, '')
+    result.widthQuery = !!(result.url.indexOf('?') > -1)
     return result
   }
 
   joinQuery () {
     const keys = Object.keys(this.query || {})
-    return keys.map((key, index) => `&${key}=${index}`).join('') 
+    return keys.map(key => `&${key}=${this.query[key]}`).join('') 
   }
 
   getFormat (data, num = 2, loop = 1) {

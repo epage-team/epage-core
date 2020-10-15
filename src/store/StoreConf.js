@@ -4,6 +4,7 @@ import { defaultSchema, defaultProps } from '../constant'
 import RootSchema from '../schema/RootSchema'
 import Logic from '../logic'
 import {
+  jsonClone,
   flattenSchema,
   isFunction,
   isArray,
@@ -21,6 +22,7 @@ import {
   cleanDefaultValue,
   getDefaults
 } from '../helper'
+import Dict from './Dict'
 
 const typeBuilder = new TypeBuilder()
 const rootSchema = new RootSchema()
@@ -45,9 +47,16 @@ export default class StoreConf {
         // 运行时状态
         // { [key]: { hide: false, readonly: false }}
         defaults: {},
-        database: {
+        store: {
           baseURL: '',
-          dict: []
+          current: {
+            action: '', // create | update
+            // 当前 new | static | dynamic
+            type: 'static',
+            index: -1,
+            dict: {}
+          },
+          dicts: []
         }
       },
       getters: {
@@ -514,6 +523,36 @@ export default class StoreConf {
         // 逻辑模式删除一个逻辑规则
         [types.$LOGIC_DELETE] ({ rootSchema }, { index }) {
           rootSchema.logics.splice(index, 1)
+        },
+
+        // 选中STORE中dict
+        [types.$DICT_SELECT] ({ store }, { dict, index, action, type }) {
+          store.current.dict = jsonClone(dict)
+          store.current.index = index
+          store.current.action = action
+          store.current.type = type
+        },
+
+        // 更新dict
+        [types.$DICT_UPDATE] ({ store }, { dict, index }) {
+          const dictInstance = new Dict(jsonClone(dict))
+          dictInstance.getData()
+          store.dicts.splice(index, 1, dictInstance)
+        },
+
+        // 更新dict
+        [types.$DICT_ADD] ({ store }, { dict }) {
+          const matched = store.dicts.filter(item => item.name === dict.name)
+          if (matched.length === 0) {
+            const dictInstance = new Dict(jsonClone(dict))
+            dictInstance.getData()
+            store.dicts.push(dictInstance)
+          }
+        },
+
+        // 更新dict
+        [types.$DICT_DELETE] ({ store }, { index }) {
+          store.dicts.splice(index, 1)
         }
       },
       actions: {},

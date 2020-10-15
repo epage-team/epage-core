@@ -37,6 +37,15 @@ const list = [
   // 删除widget规则
   '$RULE_REMOVE',
 
+  // 选中store中dict
+  '$DICT_SELECT',
+  // 更新store中dict
+  '$DICT_UPDATE',
+  // 添加store中dict
+  '$DICT_ADD',
+  // 删除store中dict
+  '$DICT_DELETE',
+
   // 更新widget默认属性
   '$WIDGET_DEFAULT_PROPS_UPDATE',
   // 通过值逻辑关系触发的widget属性改变

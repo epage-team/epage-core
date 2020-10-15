@@ -39,6 +39,46 @@ export default class Store {
   }
 
   /**
+   * get the store of store
+   * @returns {Object} store of store
+   */
+  getStore () {
+    return this.$$store.state.store
+  }
+
+  /**
+   * update the store of store
+   * @returns {Object} store of store
+   */
+  selectDict (dict, index, action, type) {
+    this.$$store.commit(this.$$types.$DICT_SELECT, { dict, index, action, type })
+  }
+
+  /**
+   * update the dict of store
+   * @returns {Object} store of store
+   */
+  updateDict (dict, index, action, type) {
+    this.$$store.commit(this.$$types.$DICT_UPDATE, { dict, index, action, type })
+  }
+
+  /**
+   * add the dict of store
+   * @returns {Object} store of store
+   */
+  addDict (dict) {
+    this.$$store.commit(this.$$types.$DICT_ADD, { dict })
+  }
+
+  /**
+   * delete the dict of store
+   * @returns {Object} store of store
+   */
+  deleteDict (index) {
+    this.$$store.commit(this.$$types.$DICT_DELETE, { index })
+  }
+
+  /**
    * get current tab on design page
    * @returns {String} current tab
    */
