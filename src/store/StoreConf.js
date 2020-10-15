@@ -133,6 +133,15 @@ export default class StoreConf {
             logic.script = logic.script || ''
           })
 
+          // 初始化store
+          const store = rootSchema.store || {}
+          const dicts = store.dicts || []
+
+          state.store.dicts = dicts.map(dict => {
+            const dictIns = new Dict(dict)
+            dictIns.getData()
+            return dictIns
+          })
           // 初始化 model
           state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
           this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: state.rootSchema })

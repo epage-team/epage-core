@@ -116,11 +116,22 @@ export function getFormData (model, rootSchema) {
  * get root schema and remove unused field
  * @param {Schema} schema root schema
  */
-export function getSchema (_schema) {
+export function getSchema (_schema, stateStore = {}) {
   if (!_schema) {
     return {}
   }
-  const schema = jsonClone(_schema)
+  const { store, ...othersSchema } = _schema
+  let _store = {
+    dicts: []
+  }
+  _store.dicts = (stateStore.dicts || []).map(dict => {
+    const { data, source, ...others } = dict
+    return Object.assign(others, { data: [], source: [] })
+  })
+  _store = jsonClone(_store)
+
+  const schema = jsonClone(othersSchema)
+  schema.store = _store
   function clean (schema) {
     const option = schema.option || {}
     for (const i in option) {

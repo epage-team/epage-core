@@ -100,8 +100,8 @@ export default class Store {
    * @returns {Object} form data
    */
   getSchema () {
-    const { rootSchema } = this.$$store.state
-    return getSchema(rootSchema)
+    const { rootSchema, store } = this.$$store.state
+    return getSchema(rootSchema, store)
   }
 
   /**

@@ -21,6 +21,9 @@ export default class RootSchema extends Schema {
       position: 'right',
       colon: false
     }
+    this.store = {
+      dicts: []
+    }
     this.style = {
       'margin-top': '0%',
       'margin-right': 'auto',
