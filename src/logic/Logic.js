@@ -23,9 +23,10 @@ export default class Logic {
       const logic = valueLogics[j]
       const valueType = valueTypes[logic.key]
       const valueValidator = this.map.value.map[logic.action]
+      if (!valueValidator) continue
+
       const validation = valueValidator.validator(model[logic.key], logic.value, { logic, valueType })
 
-      if (!valueValidator) continue
       if (!validation) continue
       // should be the same key
       if (!(logic.key in model)) continue
@@ -106,7 +107,7 @@ export default class Logic {
    * @param {Object} flatSchemas flated schema like { 'ksddf': { widget: 'input', ...}}
    * @param {Array} patches properties that should be updated
    */
-  applyPatches (flatSchemas, patches = []) {
+  applyPatches (flatSchemas, patches = [], controlledKeys) {
     const propsMerged = {}
     patches.forEach(patch => {
       for (const key in patch) {
@@ -115,10 +116,11 @@ export default class Logic {
         Object.assign(propsMerged[key], patch[key])
       }
     })
-
-    const result = Object.assign({}, this.defaults, propsMerged)
+    const controlledDefaults = {}
+    controlledKeys.forEach(key => controlledDefaults[key] = this.defaults[key])
+    const result = Object.assign({}, controlledDefaults, propsMerged)
     for (const key in result) {
-      Object.assign(flatSchemas[key], this.defaults[key], result[key])
+      Object.assign(flatSchemas[key], controlledDefaults[key], result[key])
     }
   }
 

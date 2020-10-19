@@ -227,8 +227,19 @@ export default class StoreConf {
           const valueLogics = state.rootSchema.logics.filter(logic => logic.key && logic.type === 'value')
           const logic = new Logic(state.defaults)
           const { patches, scripts } = logic.diffValueLogics(valueLogics, model, valueTypes)
+          const controlledKeys = []
 
-          logic.applyPatches(state.flatSchemas, patches)
+          for (const key in model) {
+            valueLogics.filter(logic => logic.key === key).map(logic => {
+              logic.effects.forEach(effect => {
+                if (controlledKeys.indexOf(effect.key) === -1) {
+                  controlledKeys.push(effect.key)
+                }
+              })
+            })
+          }
+
+          logic.applyPatches(state.flatSchemas, patches, controlledKeys)
           isFunction(callback) && callback(scripts)
         },
 
@@ -238,8 +249,18 @@ export default class StoreConf {
           const eventLogics = state.rootSchema.logics.filter(logic => logic.key === key && logic.type === 'event')
           const logic = new Logic(state.defaults)
           const { patches, scripts } = logic.diffEventLogics(eventLogics, eventType)
+          const controlledKeys = []
+          eventLogics.forEach(logic => {
+            if (logic.key === key) {
+              logic.effects.forEach(effect => {
+                if (controlledKeys.indexOf(effect.key) === -1) {
+                  controlledKeys.push(effect.key)
+                }
+              })
+            }
+          })
 
-          logic.applyPatches(state.flatSchemas, patches)
+          logic.applyPatches(state.flatSchemas, patches, controlledKeys)
           isFunction(callback) && callback(scripts)
         },
 
