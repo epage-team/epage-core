@@ -59,7 +59,8 @@ export function getFormData (model, rootSchema) {
 
   const getSchemaForm = function (schema, listItem) {
     const result = {}
-    const { container, name, type, dynamic, list = [], key, group, children } = schema
+    const { container, name, type, dynamic, list = [], key, group, children, hidden } = schema
+    if (hidden) return result
     if (dynamic) {
       if (container) {
         result[name] = list.map(sc => {

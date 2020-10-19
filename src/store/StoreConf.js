@@ -131,6 +131,7 @@ export default class StoreConf {
           _rootSchema.logics.map(logic => {
             logic.trigger = logic.trigger || 'prop'
             logic.script = logic.script || ''
+            logic.relation = logic.relation || 'or'
           })
 
           // 初始化store
@@ -220,9 +221,12 @@ export default class StoreConf {
 
         // value logic改变影响 widget 属性改变
         [types.$WIDGET_UPDATE_BY_VALUE_LOGIC] (state, { model, callback }) {
+          const { flatSchemas } = state
+          const valueTypes = {}
+          Object.keys(model || {}).forEach(k => valueTypes[k] = flatSchemas[k].type)
           const valueLogics = state.rootSchema.logics.filter(logic => logic.key && logic.type === 'value')
           const logic = new Logic(state.defaults)
-          const { patches, scripts } = logic.diffValueLogics(valueLogics, model)
+          const { patches, scripts } = logic.diffValueLogics(valueLogics, model, valueTypes)
 
           logic.applyPatches(state.flatSchemas, patches)
           isFunction(callback) && callback(scripts)

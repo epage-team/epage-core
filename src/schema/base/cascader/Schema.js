@@ -46,7 +46,7 @@ Object.assign(CascaderSchema, {
   type: ['array<string>', 'array<number>'],
   validators: [],
   logic: {
-    value: ['<>', '><'],
+    value: ['=', '!='],
     // event: ['focus', 'blur', 'change']
     event: []
   }

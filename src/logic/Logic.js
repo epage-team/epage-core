@@ -15,14 +15,15 @@ export default class Logic {
    * @param {Array} valueLogics list for value logics
    * @param {Object} model form data
    */
-  diffValueLogics (valueLogics, model) {
+  diffValueLogics (valueLogics, model, valueTypes) {
     const patches = []
     const scripts = []
 
     for (let j = 0; j < valueLogics.length; j++) {
       const logic = valueLogics[j]
+      const valueType = valueTypes[logic.key]
       const valueValidator = this.map.value.map[logic.action]
-      const validation = valueValidator.validator(model[logic.key], logic.value)
+      const validation = valueValidator.validator(model[logic.key], logic.value, { logic, valueType })
 
       if (!valueValidator) continue
       if (!validation) continue

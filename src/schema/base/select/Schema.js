@@ -41,7 +41,7 @@ Object.assign(SelectSchema, {
   type: ['string', 'number', 'array', 'array<string>', 'array<number>'],
   validators: [],
   logic: {
-    value: ['=', '!='],
+    value: ['=', '!=', '<>', '><'],
     // event: ['focus', 'blur', 'change']
     event: []
   }
