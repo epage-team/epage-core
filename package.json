@@ -1,6 +1,6 @@
 {
   "name": "epage-core",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "The core of epage",
   "author": "Chengzi <ttghost@126.com>",
   "main": "./dist/epage-core.min.js",

@@ -41,7 +41,7 @@ export default class ValueLogic {
           return v
         })
     }
-    const include = (arr, v) => arr.indexOf(v) > -1
+    const include = (arr = [], v) => arr.indexOf(v) > -1
     const relationFn = {
       or: (arr1, arr2, action) => {
         let result = false
