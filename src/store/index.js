@@ -72,6 +72,7 @@ export default class Store {
 
   /**
    * delete the dict of store
+   * @param {Number} index
    * @returns {Object} store of store
    */
   deleteDict (index) {
@@ -186,6 +187,25 @@ export default class Store {
    */
   getFlatSchemas () {
     return this.$$store.state.flatSchemas
+  }
+
+  /**
+   * get key by name or custom prop
+   * @param {String} name schema.name value
+   * @param {String} prop 'name' is default value. schema[prop] = name
+   * @returns {String} schema.key
+   */
+  getKeyByName (name, prop) {
+    const flatSchemas = this.$$store.state.flatSchemas || {}
+    const field = (prop && (typeof prop === 'string')) ? prop : 'name'
+    let key
+    for (const i in flatSchemas) {
+      if (flatSchemas[i][field] === name) {
+        key = i
+        break
+      }
+    }
+    return key
   }
 
   /**
