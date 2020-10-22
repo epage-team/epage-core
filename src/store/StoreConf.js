@@ -23,6 +23,7 @@ import {
   getDefaults
 } from '../helper'
 import Dict from './Dict'
+import API from './API'
 
 const typeBuilder = new TypeBuilder()
 const rootSchema = new RootSchema()
@@ -50,13 +51,24 @@ export default class StoreConf {
         store: {
           baseURL: '',
           current: {
-            action: '', // create | update
+            // action: '', // create | update
             // 当前 new | static | dynamic
-            type: 'static',
-            index: -1,
-            dict: {}
+            // type: 'static',
+            // index: -1,
+            type: '', // dict | api
+            dict: {
+              // action: '', // create | update
+              index: -1,
+              value: {}
+            },
+            api: {
+              // action: '', // create | update
+              index: -1,
+              value: {}
+            }
           },
-          dicts: []
+          dicts: [],
+          apis: []
         }
       },
       getters: {
@@ -135,14 +147,22 @@ export default class StoreConf {
           })
 
           // 初始化store
-          const store = rootSchema.store || {}
-          const dicts = store.dicts || []
+          if (!rootSchema.store) rootSchema.store = {}
+          if (!rootSchema.store.dicts) rootSchema.store.dicts = []
+          if (!rootSchema.store.apis) rootSchema.store.apis = []
 
-          state.store.dicts = dicts.map(dict => {
-            const dictIns = new Dict(dict)
-            dictIns.getData()
-            return dictIns
+          state.store.dicts = rootSchema.store.dicts.map(dict => {
+            const ins = new Dict(dict)
+            ins.getData()
+            return ins
           })
+
+          state.store.apis = rootSchema.store.apis.map(api => {
+            const ins = new API(api)
+            ins.getData()
+            return ins
+          })
+
           // 初始化 model
           state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
           this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: state.rootSchema })
@@ -560,33 +580,65 @@ export default class StoreConf {
         },
 
         // 选中STORE中dict
-        [types.$DICT_SELECT] ({ store }, { dict, index, action, type }) {
-          store.current.dict = jsonClone(dict)
-          store.current.index = index
-          store.current.action = action
-          store.current.type = type
+        [types.$STORE_DICT_SELECT] ({ store }, { dict, index, action }) {
+          store.current.dict.value = jsonClone(dict)
+          store.current.dict.index = index
+          store.current.dict.action = action
+          store.current.type = 'dict'
+          store.current.api = {}
         },
 
         // 更新dict
-        [types.$DICT_UPDATE] ({ store }, { dict, index }) {
-          const dictInstance = new Dict(jsonClone(dict))
-          dictInstance.getData()
-          store.dicts.splice(index, 1, dictInstance)
+        [types.$STORE_DICT_UPDATE] ({ store }, { dict, index }) {
+          const instance = new Dict(jsonClone(dict))
+          instance.getData()
+          store.dicts.splice(index, 1, instance)
         },
 
         // 更新dict
-        [types.$DICT_ADD] ({ store }, { dict }) {
+        [types.$STORE_DICT_ADD] ({ store }, { dict }) {
           const matched = store.dicts.filter(item => item.name === dict.name)
           if (matched.length === 0) {
-            const dictInstance = new Dict(jsonClone(dict))
-            dictInstance.getData()
-            store.dicts.push(dictInstance)
+            const instance = new Dict(jsonClone(dict))
+            instance.getData()
+            store.dicts.push(instance)
           }
         },
 
         // 更新dict
-        [types.$DICT_DELETE] ({ store }, { index }) {
+        [types.$STORE_DICT_DELETE] ({ store }, { index }) {
           store.dicts.splice(index, 1)
+        },
+        // 选中STORE中api
+        [types.$STORE_API_SELECT] ({ store }, { api, index, dictIndex }) {
+          store.current.api = {
+            value: jsonClone(api),
+            index
+          }
+          store.current.type = 'api'
+          store.current.dict = { index: dictIndex }
+        },
+
+        // 更新api
+        [types.$STORE_API_UPDATE] ({ store }, { api, index }) {
+          const instance = new API(jsonClone(api))
+          instance.getData()
+          store.apis.splice(index, 1, instance)
+        },
+
+        // 更新api
+        [types.$STORE_API_ADD] ({ store }, { api }) {
+          const matched = store.apis.filter(item => item.name === api.name)
+          if (matched.length === 0) {
+            const instance = new API(jsonClone(api))
+            instance.getData()
+            store.apis.push(instance)
+          }
+        },
+
+        // 更新api
+        [types.$STORE_API_DELETE] ({ store }, { index }) {
+          store.apis.splice(index, 1)
         }
       },
       actions: {},

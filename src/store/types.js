@@ -38,13 +38,21 @@ const list = [
   '$RULE_REMOVE',
 
   // 选中store中dict
-  '$DICT_SELECT',
+  '$STORE_DICT_SELECT',
   // 更新store中dict
-  '$DICT_UPDATE',
+  '$STORE_DICT_UPDATE',
   // 添加store中dict
-  '$DICT_ADD',
+  '$STORE_DICT_ADD',
   // 删除store中dict
-  '$DICT_DELETE',
+  '$STORE_DICT_DELETE',
+  // 选中store中api
+  '$STORE_API_SELECT',
+  // 更新store中api
+  '$STORE_API_UPDATE',
+  // 添加store中api
+  '$STORE_API_ADD',
+  // 删除store中api
+  '$STORE_API_DELETE',
 
   // 更新widget默认属性
   '$WIDGET_DEFAULT_PROPS_UPDATE',

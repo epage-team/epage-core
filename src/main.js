@@ -7,6 +7,7 @@ import Context from './context'
 import Script from './script'
 import TypeBuilder from './store/TypeBuilder'
 import Dict from './store/Dict'
+import API from './store/API'
 import * as helper from './helper'
 import * as constant from './constant'
 import * as schema from './schema'
@@ -20,6 +21,7 @@ export {
   Script,
   TypeBuilder,
   Dict,
+  API,
   helper,
   constant,
   schema

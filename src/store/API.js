@@ -1,5 +1,6 @@
 import Fetch from './Fetch'
-export default class Dict extends Fetch {
+
+export default class API extends Fetch {
   constructor (props) {
     super(props)
   }

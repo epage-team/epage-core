@@ -50,16 +50,16 @@ export default class Store {
    * update the store of store
    * @returns {Object} store of store
    */
-  selectDict (dict, index, action, type) {
-    this.$$store.commit(this.$$types.$DICT_SELECT, { dict, index, action, type })
+  selectDict (dict, index, action) {
+    this.$$store.commit(this.$$types.$STORE_DICT_SELECT, { dict, index, action })
   }
 
   /**
    * update the dict of store
    * @returns {Object} store of store
    */
-  updateDict (dict, index, action, type) {
-    this.$$store.commit(this.$$types.$DICT_UPDATE, { dict, index, action, type })
+  updateDict (dict, index) {
+    this.$$store.commit(this.$$types.$STORE_DICT_UPDATE, { dict, index })
   }
 
   /**
@@ -67,7 +67,7 @@ export default class Store {
    * @returns {Object} store of store
    */
   addDict (dict) {
-    this.$$store.commit(this.$$types.$DICT_ADD, { dict })
+    this.$$store.commit(this.$$types.$STORE_DICT_ADD, { dict })
   }
 
   /**
@@ -76,7 +76,40 @@ export default class Store {
    * @returns {Object} store of store
    */
   deleteDict (index) {
-    this.$$store.commit(this.$$types.$DICT_DELETE, { index })
+    this.$$store.commit(this.$$types.$STORE_DICT_DELETE, { index })
+  }
+
+  /**
+   * update the api of store
+   * @returns {Object} store of store
+   */
+  selectAPI (api, index, dictIndex) {
+    this.$$store.commit(this.$$types.$STORE_API_SELECT, { api, index, dictIndex })
+  }
+
+  /**
+   * update the api of store
+   * @returns {Object} store of store
+   */
+  updateAPI (api, index) {
+    this.$$store.commit(this.$$types.$STORE_API_UPDATE, { api, index })
+  }
+
+  /**
+   * add the api of store
+   * @returns {Object} store of store
+   */
+  addAPI (api) {
+    this.$$store.commit(this.$$types.$STORE_API_ADD, { api })
+  }
+
+  /**
+   * delete the api of store
+   * @param {Number} index
+   * @returns {Object} store of store
+   */
+  deleteAPI (index) {
+    this.$$store.commit(this.$$types.$STORE_API_DELETE, { index })
   }
 
   /**
