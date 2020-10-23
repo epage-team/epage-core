@@ -45,6 +45,8 @@ const list = [
   '$STORE_DICT_ADD',
   // 删除store中dict
   '$STORE_DICT_DELETE',
+  // 复制store中dict
+  '$STORE_DICT_COPY',
   // 选中store中api
   '$STORE_API_SELECT',
   // 更新store中api
@@ -53,6 +55,8 @@ const list = [
   '$STORE_API_ADD',
   // 删除store中api
   '$STORE_API_DELETE',
+  // 复制store中api
+  '$STORE_API_COPY',
 
   // 更新widget默认属性
   '$WIDGET_DEFAULT_PROPS_UPDATE',

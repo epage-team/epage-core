@@ -47,8 +47,10 @@ export default class Store {
   }
 
   /**
-   * update the store of store
-   * @returns {Object} store of store
+   * select the store of store
+   * @param {Object} dict dict of store
+   * @param {Number} index index of store.dicts
+   * @param {String} action update or create
    */
   selectDict (dict, index, action) {
     this.$$store.commit(this.$$types.$STORE_DICT_SELECT, { dict, index, action })
@@ -56,7 +58,7 @@ export default class Store {
 
   /**
    * update the dict of store
-   * @returns {Object} store of store
+   * @param {Object} dict dict of store
    */
   updateDict (dict, index) {
     this.$$store.commit(this.$$types.$STORE_DICT_UPDATE, { dict, index })
@@ -64,7 +66,7 @@ export default class Store {
 
   /**
    * add the dict of store
-   * @returns {Object} store of store
+   * @param {Object} dict dict of store
    */
   addDict (dict) {
     this.$$store.commit(this.$$types.$STORE_DICT_ADD, { dict })
@@ -72,16 +74,25 @@ export default class Store {
 
   /**
    * delete the dict of store
-   * @param {Number} index
-   * @returns {Object} store of store
+   * @param {Number} index index of store.dicts
    */
   deleteDict (index) {
     this.$$store.commit(this.$$types.$STORE_DICT_DELETE, { index })
   }
 
   /**
-   * update the api of store
-   * @returns {Object} store of store
+   * copy the dict of store
+   * @param {Number} index index of store.dicts
+   */
+  copyDict (index) {
+    this.$$store.commit(this.$$types.$STORE_DICT_COPY, { index })
+  }
+
+  /**
+   * select the api of store
+   * @param {Object} api of store
+   * @param {Number} index index of store.apis
+   * @param {Number} dictIndex index of store.dicts
    */
   selectAPI (api, index, dictIndex) {
     this.$$store.commit(this.$$types.$STORE_API_SELECT, { api, index, dictIndex })
@@ -89,7 +100,8 @@ export default class Store {
 
   /**
    * update the api of store
-   * @returns {Object} store of store
+   * @param {Object} api of store
+   * @param {Number} index index of store.apis
    */
   updateAPI (api, index) {
     this.$$store.commit(this.$$types.$STORE_API_UPDATE, { api, index })
@@ -97,7 +109,7 @@ export default class Store {
 
   /**
    * add the api of store
-   * @returns {Object} store of store
+   * @param {Object} api of store
    */
   addAPI (api) {
     this.$$store.commit(this.$$types.$STORE_API_ADD, { api })
@@ -105,11 +117,18 @@ export default class Store {
 
   /**
    * delete the api of store
-   * @param {Number} index
-   * @returns {Object} store of store
+   * @param {Number} index index of store.apis
    */
   deleteAPI (index) {
     this.$$store.commit(this.$$types.$STORE_API_DELETE, { index })
+  }
+
+  /**
+   * copy the api of store
+   * @param {Number} index
+   */
+  copyAPI (index) {
+    this.$$store.commit(this.$$types.$STORE_API_COPY, { index })
   }
 
   /**

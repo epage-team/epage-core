@@ -51,18 +51,14 @@ export default class StoreConf {
         store: {
           baseURL: '',
           current: {
-            // action: '', // create | update
             // 当前 new | static | dynamic
             // type: 'static',
-            // index: -1,
             type: '', // dict | api
             dict: {
-              // action: '', // create | update
               index: -1,
               value: {}
             },
             api: {
-              // action: '', // create | update
               index: -1,
               value: {}
             }
@@ -608,6 +604,17 @@ export default class StoreConf {
         // 更新dict
         [types.$STORE_DICT_DELETE] ({ store }, { index }) {
           store.dicts.splice(index, 1)
+        },
+        // 复制dict
+        [types.$STORE_DICT_COPY] ({ store }, { index }) {
+          const dict = jsonClone(store.dicts[index] || {})
+          do {
+            dict.name += '_copy'
+          } while(store.dicts.filter(item => item.name === dict.name).length > 0)
+
+          const newDict = new Dict(dict)
+          newDict.getData()
+          store.dicts.splice(index + 1, 0, newDict)
         },
         // 选中STORE中api
         [types.$STORE_API_SELECT] ({ store }, { api, index, dictIndex }) {
