@@ -1,12 +1,13 @@
+const defaultKV = () => [{key: '', value: '', description: ''}]
 export default class Fetch {
   constructor (props) {
     const {
       name = '',
       desc = '',
-      headers = {},
-      body = {},
-      query = {},
-      params = {},
+      header = defaultKV(),
+      body = '{}',
+      query = defaultKV(),
+      params = defaultKV(),
       url = '',
       method = 'GET',
       adapter = ''
@@ -14,7 +15,7 @@ export default class Fetch {
 
     this.name = name
     this.desc = desc
-    this.headers = headers
+    this.header = header
     this.body = body
     this.query = query
     this.params = params
@@ -25,9 +26,12 @@ export default class Fetch {
     this.source = []
     this.data = []
     this.format = 'array'
+    this.response = {
+      header: []
+    }
   }
   getData () {
-    const { url, body, headers, method, adapter } = this
+    const { url, body, header = [], method, adapter } = this
     if (!url) return Promise.reject(new Error('invalid url!'))
 
     const urlObj = this.resolveURL(url, this.params)
@@ -35,11 +39,17 @@ export default class Fetch {
 
     let queryString = this.joinQuery()
     let resolvedURL = urlObj.url
+    const headers = {}
+    header
+    .filter(h => h.key && h.value)
+    .forEach(h => headers[h.key] = h.value)
+
     const option = { headers, method }
     const METHOD = method.toUpperCase()
     const withBodyMethods = ['POST', 'PUT']
+
     if (withBodyMethods.indexOf(METHOD) > -1) {
-      option.body = JSON.stringify(body)
+      option.body = body
     }
     if (urlObj.widthQuery) {
       resolvedURL += queryString
@@ -49,6 +59,9 @@ export default class Fetch {
     }
 
     return fetch(resolvedURL, option).then(res => {
+      const header = []
+      res.headers.forEach((value, key) => header.push({ key, value }))
+      this.response.header = header
       try {
         return res.json()
       } catch(err) {
@@ -63,7 +76,7 @@ export default class Fetch {
     })
   }
 
-  resolveURL (url = '', model = {}) {
+  resolveURL (url = '', model = []) {
     const names = (url.match(/\/\:[^:\s\/\?\&]+/g) || []).map(_ => _.split(':')[1])
     const result = {
       valid: true,
@@ -72,11 +85,20 @@ export default class Fetch {
       url
     }
     let isValidURL = names.filter(name => {
-      const type = typeof model[name]
-      return name in model
-        && (type === 'string' || type === 'number' || type === 'boolean')
-        && model[name] !== ''
+      const tmp = model.filter(m => m.key === name)[0]
+      if (!tmp) return false
+
+      const type = typeof tmp.value
+
+      return tmp.value !== '' && (type === 'string' || type === 'number' || type === 'boolean')
     }).length === names.length
+
+    // let isValidURL = names.filter(name => {
+    //   const type = typeof model[name]
+    //   return name in model
+    //     && (type === 'string' || type === 'number' || type === 'boolean')
+    //     && model[name] !== ''
+    // }).length === names.length
 
     if (!isValidURL) {
       result.valid = false
@@ -84,7 +106,9 @@ export default class Fetch {
       return result
     }
     names.forEach(name => {
-      result.url = result.url.replace(new RegExp(`\B?:${name}\B?`, 'g'), model[name])
+      const tmp = model.filter(m => m.key === name)[0]
+      if (!tmp) return
+      result.url = result.url.replace(new RegExp(`\B?:${name}\B?`, 'g'), tmp.value)
     })
     result.url = result.url.replace(/(&|\?)+$/, '')
     result.widthQuery = !!(result.url.indexOf('?') > -1)
@@ -92,8 +116,10 @@ export default class Fetch {
   }
 
   joinQuery () {
-    const keys = Object.keys(this.query || {})
-    return keys.map(key => `&${key}=${this.query[key]}`).join('') 
+    return (this.query || [])
+      .filter(q => q.key && q.value)
+      .map(q => `&${q.key}=${q.value}`)
+      .join('')
   }
 
   getFormat (data, num = 2, loop = 1) {
