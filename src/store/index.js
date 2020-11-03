@@ -655,4 +655,16 @@ export default class Store {
 
     this.$$store.commit(this.$$types.$LOGIC_DELETE, { index })
   }
+
+  /**
+   * update style
+   * @param {Obect} style style of css attribute
+   */
+  updateStyle (style) {
+    if (typeof style !== 'object') {
+      return
+    }
+
+    this.$$store.commit(this.$$types.$STYLE_UPDATE, { style })
+  }
 }

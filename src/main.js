@@ -11,6 +11,8 @@ import API from './store/API'
 import * as helper from './helper'
 import * as constant from './constant'
 import * as schema from './schema'
+import * as style from './style'
+
 export {
   Worker,
   Rule,
@@ -24,5 +26,6 @@ export {
   API,
   helper,
   constant,
-  schema
+  schema,
+  style
 }

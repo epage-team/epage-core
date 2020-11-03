@@ -646,6 +646,12 @@ export default class StoreConf {
         // 更新api
         [types.$STORE_API_DELETE] ({ store }, { index }) {
           store.apis.splice(index, 1)
+        },
+
+        // 更新style
+        [types.$STYLE_UPDATE] ({ rootSchema }, { style }) {
+          const originStyle = { ...rootSchema.style }
+          rootSchema.style = Object.assign(originStyle, style)
         }
       },
       actions: {},

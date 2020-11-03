@@ -90,7 +90,10 @@ const list = [
   // 容器widget删除子容器
   '$WIDGET_CHILD_REMOVE',
   // 容器widget移动子容器
-  '$WIDGET_CHILD_MOVE'
+  '$WIDGET_CHILD_MOVE',
+
+  // 更新全局样式
+  '$STYLE_UPDATE'
 ]
 
 list.forEach(i => (types[i] = i))
