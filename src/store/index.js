@@ -94,8 +94,8 @@ export default class Store {
    * @param {Number} index index of store.apis
    * @param {Number} dictIndex index of store.dicts
    */
-  selectAPI (api, index, dictIndex) {
-    this.$$store.commit(this.$$types.$STORE_API_SELECT, { api, index, dictIndex })
+  selectAPI (api, index, dictIndex, action) {
+    this.$$store.commit(this.$$types.$STORE_API_SELECT, { api, index, dictIndex, action })
   }
 
   /**

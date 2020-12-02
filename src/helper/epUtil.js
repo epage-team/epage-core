@@ -123,12 +123,12 @@ export function getSchema (_schema, stateStore = {}) {
   }
   const { store, ...othersSchema } = _schema
   let _store = {
-    dicts: []
+    dicts: [],
+    apis: []
   }
-  _store.dicts = (stateStore.dicts || []).map(dict => {
-    const { data, source, ...others } = dict
-    return Object.assign(others, { data: [], source: [] })
-  })
+  _store.dicts = storeFetchClean(stateStore.dicts)
+  _store.apis = storeFetchClean(stateStore.apis)
+
   _store = jsonClone(_store)
 
   const schema = jsonClone(othersSchema)
@@ -154,6 +154,19 @@ export function getSchema (_schema, stateStore = {}) {
   }
   clean(schema)
   return schema
+}
+
+export function storeFetchClean(list = []) {
+  return list.map(item => {
+    const { source, data, response, ...others } = item
+    return Object.assign(others, {
+      source: [],
+      data: [],
+      response: {
+        header: []
+      }
+    })
+  })
 }
 
 /**
