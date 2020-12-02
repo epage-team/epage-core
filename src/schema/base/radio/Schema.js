@@ -10,6 +10,12 @@ export default class RadioSchema extends FormSchema {
     this.default = ''
     this.option = {
       type: 'static',
+      dict: {
+        type: 'dict', // dict | api
+        dict: '',
+        dictAPI: '',
+        api: ''
+      },
       direction: 'horizontal',
       url: '',
       adapter: 'return data',
