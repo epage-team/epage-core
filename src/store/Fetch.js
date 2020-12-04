@@ -68,7 +68,8 @@ export default class Fetch {
         throw err
       }
     }).then(res => {
-      const data = adapter ? new Function('data', adapter)(res) : res
+      const _adapter = res.adapter || adapter
+      const data = _adapter ? new Function('data', _adapter)(res) : res
       this.source = res
       this.data = data
       this.format = this.getFormat(data)

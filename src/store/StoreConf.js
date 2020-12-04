@@ -145,17 +145,28 @@ export default class StoreConf {
           })
 
           // 初始化store
-          if (!rootSchema.store) rootSchema.store = {}
+          if (!rootSchema.store) {
+            rootSchema.store = {
+              apis: [],
+              dicts: [],
+              current: {}
+            }
+          }
           if (
             !rootSchema.store.dicts
             || rootSchema.store.dicts.length === 0
           ) rootSchema.store.dicts = []
           if (!rootSchema.store.apis) rootSchema.store.apis = []
 
-          state.store.dicts = rootSchema.store.dicts.map(dict => {
-            const ins = new Dict(dict)
-            ins.getData()
-            return ins
+          const dicts = rootSchema.store.dicts.map(dict => new Dict(dict))
+          const promiseAll = Promise.all(dicts.map(dict => dict.getData()))
+
+          promiseAll.then(() => {
+            dicts.forEach(dict => {
+              if (!Array.isArray(dict.data)) dict.data = []
+              dict.data = dict.data.map(item => new API(item))
+            })
+            state.store.dicts = dicts
           })
 
           state.store.apis = rootSchema.store.apis.map(api => {
