@@ -144,36 +144,21 @@ export default class StoreConf {
             logic.relation = logic.relation || 'or'
           })
 
-          // 初始化store
-          if (!rootSchema.store) {
-            rootSchema.store = {
-              apis: [],
-              dicts: [],
-              current: {}
-            }
-          }
-          if (
-            !rootSchema.store.dicts
-            || rootSchema.store.dicts.length === 0
-          ) rootSchema.store.dicts = []
-          if (!rootSchema.store.apis) rootSchema.store.apis = []
-
-          const dicts = rootSchema.store.dicts.map(dict => new Dict(dict))
-          const promiseAll = Promise.all(dicts.map(dict => dict.getData()))
-
-          promiseAll.then(() => {
-            dicts.forEach(dict => {
-              if (!Array.isArray(dict.data)) dict.data = []
-              dict.data = dict.data.map(item => new API(item))
-            })
-            state.store.dicts = dicts
-          })
-
-          state.store.apis = rootSchema.store.apis.map(api => {
+          // 初始化schema store
+          let schemaStore = jsonClone(rootSchema.store || {})
+          schemaStore.current = { type: '', dict: {}, api: {}}
+          schemaStore.apis = (schemaStore.apis || []).map(api => {
             const ins = new API(api)
             ins.getData()
             return ins
           })
+          schemaStore.dicts = (schemaStore.dicts || []).map(dict => {
+            const ins = new Dict(dict)
+            ins.getData()
+            return ins
+          })
+
+          state.store = schemaStore
 
           // 初始化 model
           state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
@@ -651,10 +636,17 @@ export default class StoreConf {
         },
         // 选中STORE中api
         [types.$STORE_API_SELECT] ({ store }, { api, index, dictIndex }) {
+          const action = dictIndex >= 0
+            ? ''
+            : (
+              index >= 0
+              ? 'update'
+              : 'create'
+            )
           store.current.api = {
             value: jsonClone(api),
             index,
-            action: dictIndex < 0 ? 'create' : ''
+            action
           }
           store.current.type = 'api'
           store.current.dict = { index: dictIndex }
