@@ -25,7 +25,6 @@ import {
 } from '../helper'
 import Dict from './Dict'
 import API from './API'
-import Fetch from './Fetch'
 
 const typeBuilder = new TypeBuilder()
 const rootSchema = new RootSchema()
@@ -144,6 +143,32 @@ export default class StoreConf {
             logic.relation = logic.relation || 'or'
           })
 
+          // 初始化 model
+          state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
+          this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: state.rootSchema })
+
+          // 初始化必要的api数据
+          const usedDictAPI = {}
+          for(let key in state.flatSchemas) {
+            const opt = state.flatSchemas[key].option || {}
+            if (
+              opt.type === 'dict'
+              && opt.dict
+              && opt.dict.dict
+              && opt.dict.type === 'dict'
+              && opt.dict.dictAPI
+            ) {
+              const dictName = opt.dict.dict
+              if (usedDictAPI[dictName]) {
+                if (usedDictAPI[dictName].indexOf(opt.dict.dictAPI) === -1) {
+                  usedDictAPI[dictName].push(opt.dict.dictAPI)
+                }
+              } else {
+                usedDictAPI[dictName] = [opt.dict.dictAPI]
+              }
+            }
+          }
+
           // 初始化schema store
           let schemaStore = jsonClone(rootSchema.store || {})
           schemaStore.current = { type: '', dict: {}, api: {}}
@@ -154,15 +179,24 @@ export default class StoreConf {
           })
           schemaStore.dicts = (schemaStore.dicts || []).map(dict => {
             const ins = new Dict(dict)
-            ins.getData()
+            ins.getData().then(() => {
+              if (!Array.isArray(usedDictAPI[ins.name])) return
+              usedDictAPI[ins.name].forEach(dictAPI => {
+
+                for (let i = 0; i < ins.data.length; i++) {
+                  const item = ins.data[i]
+                  if (item.name !== dictAPI) continue
+                  const apiIns = item instanceof API ? item : new API(item)
+                  apiIns.getData()
+                  ins.data.splice(i, 1, apiIns)
+                }
+              })
+            })
             return ins
           })
 
           state.store = schemaStore
 
-          // 初始化 model
-          state.rootSchema = Object.assign({}, state.rootSchema, _rootSchema)
-          this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: state.rootSchema })
           this.commit(types.$RULE_INIT, { rootSchema: state.rootSchema })
 
           // 遍历schema获取model默认值
