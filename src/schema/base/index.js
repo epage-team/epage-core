@@ -15,6 +15,7 @@ export default {
   table: require('./table').default,
   switch: require('./switch').default,
   textarea: require('./textarea').default,
+  text: require('./text').default,
   timePicker: require('./timePicker').default,
   upload: require('./upload').default,
   line: require('./line').default
