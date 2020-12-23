@@ -23,6 +23,7 @@ export default class BaseSchema {
     this.hidden = false
     // extra options for this schema
     this.option = {}
+    this.style = {}
     // create schema instance from schema object
     this.create(props)
     if (!this.widget) {
