@@ -658,13 +658,14 @@ export default class Store {
 
   /**
    * update style
+   * @param {String|null} key schema key
    * @param {Obect} style style of css attribute
    */
-  updateStyle (style) {
+  updateStyle (key, style) {
     if (typeof style !== 'object') {
       return
     }
 
-    this.$$store.commit(this.$$types.$STYLE_UPDATE, { style })
+    this.$$store.commit(this.$$types.$STYLE_UPDATE, { key, style })
   }
 }

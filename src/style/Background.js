@@ -11,7 +11,7 @@ export default class Background {
       attachment
     } = background || {}
 
-    this.position = position || 'top'
+    this.position = position || 'top center'
     this.repeat = repeat || 'no-repeat' // 'no-repeat' | 'repeat-x' | 'repeat-y'
     this.size = size || 'contain' // 'cover' | 'contain'
     // this.color = color || '' // 'cover' | ''
