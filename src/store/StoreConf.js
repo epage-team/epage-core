@@ -92,7 +92,11 @@ export default class StoreConf {
           const { widget: widgetName, key } = state.selectedSchema
           const widget = getters.flatWidgets[widgetName] || null
 
-          return key && widget ? widget.Setting : null
+          return key && widget
+            ? (typeof widget.Setting === 'function'
+              ? widget.Setting
+              : { ...widget.Setting })
+            : null
         },
 
         // widget schema 声明需要哪些规则validator
