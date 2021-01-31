@@ -12,6 +12,8 @@ import * as helper from './helper'
 import * as constant from './constant'
 import * as schema from './schema'
 import * as style from './style'
+import * as hook from './hook'
+import * as render from './render'
 
 export {
   Worker,
@@ -27,5 +29,7 @@ export {
   helper,
   constant,
   schema,
-  style
+  style,
+  hook,
+  render
 }
