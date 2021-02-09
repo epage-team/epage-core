@@ -6,6 +6,7 @@ export default class SyncWaterfallHook extends Hook {
   }
   call (...args) {
     const [first, ...others] = this.tasks
+    if (!Array.isArray(first)) return args
     return others.reduce((ret, task) => task(ret), first(...args))
     
   }

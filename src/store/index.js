@@ -346,7 +346,7 @@ export default class Store {
    */
   initWidgets (widgets) {
     if (!isArray(widgets)) {
-      return console.warning('widgets should be type of array')
+      return console.warn('widgets should be type of array')
     }
 
     this.$$store.commit(this.$$types.$WIDGETS_SET, { widgets })
@@ -358,7 +358,7 @@ export default class Store {
    */
   updateMode (mode) {
     if (!include(modes(), mode)) {
-      return console.warning(`mode must be one of ${modes().toString()}`)
+      return console.warn(`mode must be one of ${modes().toString()}`)
     }
 
     this.$$store.commit(this.$$types.$MODE_CHANGE, { mode })
@@ -370,7 +370,7 @@ export default class Store {
    */
   addWidget (widget) {
     if (!isNotEmptyString(widget)) {
-      return console.warning('widget should be a non-empty string')
+      return console.warn('widget should be a non-empty string')
     }
 
     this.$$store.commit(this.$$types.$WIDGET_ADD, { widget })
@@ -382,7 +382,7 @@ export default class Store {
    */
   dynamicAddWidget (key) {
     if (!isNotEmptyString(key)) {
-      return console.warning('key should be a non-empty string')
+      return console.warn('key should be a non-empty string')
     }
 
     this.$$store.commit(this.$$types.$WIDGET_DYNAMIC_ADD, { key })
@@ -394,7 +394,7 @@ export default class Store {
    */
   dynamicRemoveWidget (key, index) {
     if (!isNotEmptyString(key)) {
-      return console.warning('key should be a non-empty string')
+      return console.warn('key should be a non-empty string')
     }
 
     this.$$store.commit(this.$$types.$WIDGET_DYNAMIC_REMOVE, { key, index })
