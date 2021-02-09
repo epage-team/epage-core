@@ -70,7 +70,7 @@ export default class Render {
     const { $children } = this.$$origin
 
     if (isArray($children) && $children[0]) {
-      return $children[0].validateFields()
+      return $children[0].validateFields(...arguments)
     }
   }
 
@@ -78,7 +78,11 @@ export default class Render {
     const { $children } = this.$$origin
 
     if (isArray($children) && $children[0]) {
-      return $children[0].resetFields()
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve($children[0].resetFields())
+        }, 0)
+      })
     }
   }
 

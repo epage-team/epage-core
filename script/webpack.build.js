@@ -35,6 +35,18 @@ const webpackConfig = merge(webpackBaseConfig, {
       commonjs: 'vue',
       commonjs2: 'vue',
       amd: 'vue'
+    },
+    sortablejs: {
+      root: 'Sortable',
+      commonjs: 'sortablejs',
+      commonjs2: 'sortablejs',
+      amd: 'sortablejs'
+    },
+    vuedraggable: {
+      root: 'vuedraggable',
+      commonjs: 'vuedraggable',
+      commonjs2: 'vuedraggable',
+      amd: 'vuedraggable'
     }
   },
   // devtool: 'source-map',

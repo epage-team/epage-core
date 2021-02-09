@@ -14,6 +14,7 @@ import * as schema from './schema'
 import * as style from './style'
 import * as hook from './hook'
 import * as render from './render'
+import * as drag from './drag'
 
 export {
   Worker,
@@ -31,5 +32,6 @@ export {
   schema,
   style,
   hook,
-  render
+  render,
+  drag
 }
