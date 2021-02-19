@@ -1,5 +1,25 @@
 # Change Log
 
+### 0.5.0（2021/2/19）
+
+- [feat] : 对外暴露`drag`模块，当前支持vue模块拖动，为自定义容器组件提供能力，依赖`vuedraggable`
+- [feat] : 对外暴露`hook`模块，定制设计器及渲染器时可使用，一般用于设计器插件中，可参考`epage`设计器hook使用，能力如下：
+
+```js
+const syncHook = new hook.SyncHook() // 同步串行任务，不接受上一个任务结果
+syncHook.tap(callback) // 将callback添加到同步任务队列
+syncHook.call(args) // 将arguments分别传给任务队列的callback中
+
+const syncWaterHook = new hook.SyncWaterfallHook() // 同步串行任务，接受上一个任务结果
+// 用法同上，只是会将每个任务结果作为参数传给下个任务
+```
+- [feat] : 对外暴露`render`模块，直接提供`render.VueRender`，实验阶段的`ReactRender`可通过以下方式引入
+
+```js
+import ReactRender from 'epage-core/src/render/ReactRender'
+```
+方式
+- 
 ### 0.4.1（2021/1/18）
 
 - [fix] : 修复widget被二次添加时，widget.Setting生命周期没有再次使用问题
