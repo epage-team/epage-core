@@ -51,21 +51,6 @@ export default class Render {
     this.off = component.off
   }
 
-  render (option = {}) {
-    const { el, store, mode, component } = this
-    const extension = { store, $render: this, mode: option.mode || mode }
-    const root = document.createElement('div')
-    el.appendChild(root)
-    this.callPlugin('render', 'beforeCreate', { ctx: this })
-    const ins = new Vue({
-      extension,
-      el: root,
-      render: h => h(component)
-    })
-    this.callPlugin('render', 'created', { ctx: this, ins })
-    return ins
-  }
-
   validateFields () {
     const { $children } = this.$$origin
 
@@ -84,6 +69,24 @@ export default class Render {
         }, 0)
       })
     }
+  }
+
+  render (option = {}) {
+    const { el, store, mode, component } = this
+    const extension = { store, $render: this, mode: option.mode || mode }
+    const root = document.createElement('div')
+
+    el.appendChild(root)
+    this.callPlugin('render', 'beforeCreate', { ctx: this })
+
+    const ins = new Vue({
+      extension,
+      el: root,
+      render: h => h(component)
+    })
+
+    this.callPlugin('render', 'created', { ctx: this, ins })
+    return ins
   }
 
   destroy () {

@@ -35,11 +35,10 @@
   },
   "peerDependencies": {
     "vue": ">=2.5",
-    "vuex": ">=3.1",
-    "vuedraggable": ">=2.20.0"
+    "vuedraggable": ">=2.20.0",
+    "vuex": ">=3.1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
@@ -55,9 +54,11 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.0.1",
     "husky": "^4.2.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
-    "vuex": "^3.1.1",
     "vue": "^2.5",
+    "vuex": "^3.1.1",
     "webpack": "^4.35.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.5",
