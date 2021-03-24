@@ -3,6 +3,7 @@ export default class Hook {
   constructor () {
     this.tasks = []
   }
+
   call () {}
   tap (cb) {
     if (typeof cb !== 'function') return

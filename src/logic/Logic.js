@@ -30,7 +30,8 @@ export default class Logic {
       if (!validation) continue
       // should be the same key
       if (!(logic.key in model)) continue
-      
+
+      /* eslint no-case-declarations: 0 */
       switch (logic.trigger) {
         case 'script':
           logic.script && scripts.push(logic.script)
@@ -54,7 +55,6 @@ export default class Logic {
         default:
           break
       }
-
     }
     return { patches, scripts }
   }
@@ -71,6 +71,7 @@ export default class Logic {
     for (let i = 0; i < eventLogics.length; i++) {
       const logic = eventLogics[i]
 
+      /* eslint no-case-declarations: 0 */
       switch (logic.trigger) {
         case 'script':
           logic.script && scripts.push(logic.script)
@@ -117,7 +118,7 @@ export default class Logic {
       }
     })
     const controlledDefaults = {}
-    controlledKeys.forEach(key => controlledDefaults[key] = this.defaults[key])
+    controlledKeys.forEach(key => { controlledDefaults[key] = this.defaults[key] })
     const result = Object.assign({}, controlledDefaults, propsMerged)
     for (const key in result) {
       Object.assign(flatSchemas[key], controlledDefaults[key], result[key])

@@ -24,7 +24,7 @@ export default class JSONRule {
         try {
           JSON.parse(value)
           callback()
-        } catch(e) {
+        } catch (e) {
           return callback(new Error(rule.message))
         }
       },

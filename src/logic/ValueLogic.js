@@ -2,8 +2,7 @@ import Effect from './Effect'
 
 export default class ValueLogic {
   constructor () {
-
-    const booleanMap = { 'true': true, 'false': false }
+    const booleanMap = { true: true, false: false }
     function isSameArray (arr1, arr2, matchedType) {
       if (!Array.isArray(arr1)) return false
       if (!Array.isArray(arr2)) return false
@@ -12,8 +11,8 @@ export default class ValueLogic {
 
       if (_arr1.length !== _arr2.length) return false
 
-      let result =  true
-      for(let i = 0; i < _arr1.length; i++) {
+      let result = true
+      for (let i = 0; i < _arr1.length; i++) {
         if (_arr1[i] !== _arr2[i]) {
           result = false
           break
@@ -53,7 +52,7 @@ export default class ValueLogic {
               break
             }
           // 不包含
-          } else if (action === '><'){
+          } else if (action === '><') {
             if (!include(arr1, arr2[i])) {
               result = true
               break
@@ -78,7 +77,6 @@ export default class ValueLogic {
               break
             }
           }
-
         }
         return result
       }

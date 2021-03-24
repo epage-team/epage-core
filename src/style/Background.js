@@ -2,7 +2,7 @@
  * 解析背景样式
  */
 export default class Background {
-  constructor(background) {
+  constructor (background) {
     const {
       position,
       repeat,
@@ -18,7 +18,8 @@ export default class Background {
     this.image = image || '' // 'cover' | ''
     this.attachment = attachment || 'scroll' // 'scroll' | 'fixed'
   }
-  toString() {
+
+  toString () {
     const {
       position,
       repeat,

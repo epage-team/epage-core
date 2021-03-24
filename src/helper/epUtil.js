@@ -156,7 +156,7 @@ export function getSchema (_schema, stateStore = {}) {
   return schema
 }
 
-export function storeFetchClean(list = []) {
+export function storeFetchClean (list = []) {
   return list.map(item => {
     const { source, data, response, ...others } = item
     return Object.assign(others, {
@@ -563,12 +563,12 @@ export function convertNameModelToKeyModel (model, flatSchemas) {
  * 根据schema.default默认值处理为最终可用默认值
  * @param {Schema} schema
  */
-export function cleanDefaultValue(schema) {
+export function cleanDefaultValue (schema) {
   const { widget, option = {}, default: defaultValue } = schema
   const { format, range } = option
   let result = defaultValue
 
-  if ("default" in schema) {
+  if ('default' in schema) {
     switch (widget) {
       case 'datePicker':
         if (defaultValue === 'usedate') {
@@ -595,7 +595,7 @@ export function cleanDefaultValue(schema) {
 
 /**
  * 获取所有schema指定字段的默认值
- * @param {Object} flatSchemas 
+ * @param {Object} flatSchemas
  * @param {Object} props ['value', ...]
  */
 export function getDefaults (flatSchemas, props = []) {

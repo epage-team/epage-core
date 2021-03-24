@@ -1,4 +1,4 @@
-const defaultKV = () => [{key: '', value: '', description: ''}]
+const defaultKV = () => [{ key: '', value: '', description: '' }]
 export default class Fetch {
   constructor (props) {
     const {
@@ -21,7 +21,7 @@ export default class Fetch {
     this.params = params
     // /:userId/test 其中userId为 form name
     this.url = url
-    this.method =method
+    this.method = method
     this.adapter = adapter
     this.source = []
     this.data = []
@@ -30,6 +30,7 @@ export default class Fetch {
       header: []
     }
   }
+
   getData () {
     const { url, body, header = [], method, adapter } = this
     if (!url) return Promise.reject(new Error('invalid url!'))
@@ -41,8 +42,8 @@ export default class Fetch {
     let resolvedURL = urlObj.url
     const headers = {}
     header
-    .filter(h => h.key && h.value)
-    .forEach(h => headers[h.key] = h.value)
+      .filter(h => h.key && h.value)
+      .forEach(h => { headers[h.key] = h.value })
 
     const option = { headers, method }
     const METHOD = method.toUpperCase()
@@ -53,7 +54,7 @@ export default class Fetch {
     }
     if (urlObj.widthQuery) {
       resolvedURL += queryString
-    } else  {
+    } else {
       queryString = queryString.slice(1)
       resolvedURL += `?${queryString}`
     }
@@ -62,13 +63,15 @@ export default class Fetch {
       const header = []
       res.headers.forEach((value, key) => header.push({ key, value }))
       this.response.header = header
+      /* eslint no-useless-catch: 0 */
       try {
         return res.json()
-      } catch(err) {
+      } catch (err) {
         throw err
       }
     }).then(res => {
       const _adapter = res.adapter || adapter
+      /* eslint no-new-func: 0 */
       const data = _adapter ? new Function('data', _adapter)(res) : res
       this.source = res
       this.data = data
@@ -78,14 +81,14 @@ export default class Fetch {
   }
 
   resolveURL (url = '', model = []) {
-    const names = (url.match(/\/\:[^:\s\/\?\&]+/g) || []).map(_ => _.split(':')[1])
+    const names = (url.match(/\/:[^:\s/?&]+/g) || []).map(_ => _.split(':')[1])
     const result = {
       valid: true,
       message: '',
       widthQuery: false,
       url
     }
-    let isValidURL = names.filter(name => {
+    const isValidURL = names.filter(name => {
       const tmp = model.filter(m => m.key === name)[0]
       if (!tmp) return false
 
@@ -109,6 +112,7 @@ export default class Fetch {
     names.forEach(name => {
       const tmp = model.filter(m => m.key === name)[0]
       if (!tmp) return
+      /* eslint no-useless-escape: 0 */
       result.url = result.url.replace(new RegExp(`\B?:${name}\B?`, 'g'), tmp.value)
     })
     result.url = result.url.replace(/(&|\?)+$/, '')
@@ -124,10 +128,11 @@ export default class Fetch {
   }
 
   getFormat (data, num = 2, loop = 1) {
-    let type = Object.prototype.toString.call(data).split(' ')[1].split(']')[0].toLowerCase()
+    const type = Object.prototype.toString.call(data).split(' ')[1].split(']')[0].toLowerCase()
     let format = ''
     const space = new Array(num * loop + 1).join(' ')
 
+    /* eslint no-case-declarations: 0 */
     switch (type) {
       case 'number':
       case 'boolean':
@@ -144,7 +149,7 @@ export default class Fetch {
           keys.forEach((k, index) => {
             const sub = this.getFormat(data[k], num, loop)
             const isLast = index === len - 1
-            const indentSpace = space.substr(0, space.length -2)
+            const indentSpace = space.substr(0, space.length - 2)
             format += `${space}${k}: ${sub}`
             format += isLast ? `\n${indentSpace}}` : ',\n'
           })

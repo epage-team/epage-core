@@ -10,7 +10,7 @@ import {
 } from '../helper'
 
 export default class Render {
-  constructor(option) {
+  constructor (option) {
     const {
       el,
       store,
@@ -21,7 +21,7 @@ export default class Render {
       Rule: CustomRule,
       callPlugin
     } = option
-    
+
     this.el = el
     this.mode = mode || 'edit'
     this.$$origin = null
@@ -31,7 +31,7 @@ export default class Render {
 
     const React = require('react').default
     this.formRef = React.createRef()
-    
+
     usePlugins(Vue, [Vuex])
     this.callPlugin('render', 'init', { Vue, ctx: this })
 
@@ -54,7 +54,7 @@ export default class Render {
     this.off = component.off
   }
 
-  validateFields (){
+  validateFields () {
     return new Promise((resolve, reject) => {
       return this.formRef.current
         .validateFields(...arguments)
@@ -67,17 +67,17 @@ export default class Render {
     })
   }
 
-  resetFields(){
+  resetFields () {
     return new Promise((resolve, reject) => {
       this.formRef.current.resetFields()
       resolve(true)
     })
   }
-  
-  render(option = {}) {
+
+  render (option = {}) {
     const { el, store, mode, formRef, component } = this
-    const props = { 
-      store, 
+    const props = {
+      store,
       mode: option.mode || mode,
       formRef,
       onSubmit: this.onSubmit
@@ -93,7 +93,7 @@ export default class Render {
     return ins
   }
 
-  destrory() {
+  destrory () {
     const ReactDOM = require('react-dom').default
     if (this.$$origin && isFunction(this.$$origin.$destroy)) {
       this.callPlugin('render', 'beforeDestroy', { ctx: this })

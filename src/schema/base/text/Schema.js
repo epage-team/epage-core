@@ -14,5 +14,5 @@ export default class TextSchema extends BaseSchema {
 Object.assign(TextSchema, {
   title: '文本',
   widget: 'text',
-  preview: '',
+  preview: ''
 })

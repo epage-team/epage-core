@@ -21,7 +21,7 @@ export default class Render {
       Rule: CustomRule,
       callPlugin
     } = option
-    
+
     this.el = el
     this.mode = mode || 'edit'
     this.$$origin = null
@@ -94,7 +94,7 @@ export default class Render {
       this.callPlugin('render', 'beforeDestroy', { ctx: this })
       this.$$origin.$destroy()
       this.$$origin.$off()
-      if(!this.el.contains(this.$$origin.$el)) return
+      if (!this.el.contains(this.$$origin.$el)) return
       this.el.removeChild(this.$$origin.$el)
       this.callPlugin('render', 'destroyed', { ctx: this })
     }

@@ -1,10 +1,10 @@
 
-export default class Script{
-  constructor(ctx) {
+export default class Script {
+  constructor (ctx) {
     this.ctx = ctx
   }
 
-  exec(script){
+  exec (script) {
     try {
       /* eslint-disable no-new-func */
       const fun = new Function('ctx', script)
