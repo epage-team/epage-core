@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.2（2021/4/1）
+
+- [feat] : `store.addWidget(widget)` 优化，widget可以为如`input`形式字符串，也可以为`{ widget: 'input', ...}` 完整schema
+- [feat] : `util.flattenSchema` 导出增加对象增加 `rootSchema`引用。可以通过`store.updateWidgetOption(rootSchema.key, {...})`更新`rootSchema.option`选项
+
 ### 0.5.1（2021/2/21）
 
 - [fix] : 添加`vuedraggable`依赖，作为拖拽能力
