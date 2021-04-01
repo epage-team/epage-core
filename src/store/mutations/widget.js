@@ -79,17 +79,21 @@ export default {
 
   // 设计模式向表单添加一个widget，schema为此widget对应的默认schema
   // 目前默认添加到整个表单最后
-  [types.$WIDGET_ADD] (state, { widget }) {
+  [types.$WIDGET_ADD] (state, { widget, schema }) {
     const { selectedSchema, rootSchema } = state
     const { flatWidgets, isSelected } = this.getters
-    const WidgetSchema = flatWidgets[widget].Schema
+    const wid = widget || schema.widget
+    const WidgetSchema = flatWidgets[wid].Schema
 
     if (!isFunction(WidgetSchema)) {
       return console.error('Schema should be a constructor')
     }
 
     let childrenSchema = []
-    const newSchema = new WidgetSchema({ widgets: flatWidgets })
+    // 根据传入的完整schema添加，需额外配置args参数
+    const args = (!widget && schema) ? { clone: true, schema } : {}
+    const newSchema = new WidgetSchema({ widgets: flatWidgets, ...args })
+
     if (isSelected) {
       childrenSchema = getParentListByKey(selectedSchema.key, rootSchema)
       const index = getIndexByKey(selectedSchema.key, childrenSchema)

@@ -257,6 +257,9 @@ export function replaceSchemaKey (schema) {
  */
 export function flattenSchema (schema) {
   const result = {}
+  if (schema && schema.key) {
+    result[schema.key] = schema
+  }
   const ecursive = (schema, result) => {
     const { dynamic, list, container, children } = schema || {}
 

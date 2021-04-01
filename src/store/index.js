@@ -366,14 +366,18 @@ export default class Store {
 
   /**
    * add widget when has registered widgets
-   * @param {String} widget the unique name
+   * @param {String|Schema} widget the unique name or schema
    */
   addWidget (widget) {
     if (!isNotEmptyString(widget)) {
-      return console.warn('widget should be a non-empty string')
+      if (isPlainObject(widget) && isNotEmptyString(widget.widget)) {
+        this.$$store.commit(this.$$types.$WIDGET_ADD, { widget: null, schema: widget })
+      } else {
+        return console.warn('widget should be a non-empty string or schema object')
+      }
+    } else {
+      this.$$store.commit(this.$$types.$WIDGET_ADD, { widget, schema: null })
     }
-
-    this.$$store.commit(this.$$types.$WIDGET_ADD, { widget })
   }
 
   /**
