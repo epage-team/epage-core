@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.3（2021/4/2）
+
+- [fix] : 修复`store.addWidget()`后更新`store.updateWidgetOption(rootSchema.key, {})`选项不生效问题
+
+
 ### 0.5.2（2021/4/1）
 
 - [feat] : `store.addWidget(widget)` 优化，widget可以为如`input`形式字符串，也可以为`{ widget: 'input', ...}` 完整schema

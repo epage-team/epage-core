@@ -15,6 +15,7 @@ const typeBuilder = new TypeBuilder()
 
 export default {
   [types.$ROOT_SCHEMA_FLAT] (state, { rootSchema }) {
+    state.rootSchema = rootSchema
     state.flatSchemas = flattenSchema(rootSchema)
   },
 
