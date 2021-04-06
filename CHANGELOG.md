@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.4（2021/4/6）
+
+- [fix] : 修复插件使用`copy`勾子复制schema未生效问题
+- [fix] : 渲染器生命周期`created`位置不正确问题
+
 ### 0.5.3（2021/4/2）
 
 - [fix] : 修复`store.addWidget()`后更新`store.updateWidgetOption(rootSchema.key, {})`选项不生效问题

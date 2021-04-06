@@ -35,6 +35,7 @@ export default class Render {
     if (store) {
       this.store = store
       this.$$origin = this.render()
+      this.callPlugin('render', 'created', { ctx: this })
     } else {
       this.store = new Store({ Rule: CustomRule || Rule })
       if (isArray(widgets)) {
@@ -43,6 +44,7 @@ export default class Render {
           this.store.initRootSchema(schema)
         }
         this.$$origin = this.render()
+        this.callPlugin('render', 'created', { ctx: this })
       } else {
         console.error('widgets must be an array')
       }
@@ -85,7 +87,6 @@ export default class Render {
       render: h => h(component)
     })
 
-    this.callPlugin('render', 'created', { ctx: this, ins })
     return ins
   }
 
