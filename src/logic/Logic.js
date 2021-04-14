@@ -118,7 +118,10 @@ export default class Logic {
       }
     })
     const controlledDefaults = {}
-    controlledKeys.forEach(key => { controlledDefaults[key] = this.defaults[key] })
+    controlledKeys.forEach(key => {
+      if (!(key in this.defaults)) return
+      controlledDefaults[key] = this.defaults[key]
+    })
     const result = Object.assign({}, controlledDefaults, propsMerged)
     for (const key in result) {
       Object.assign(flatSchemas[key], controlledDefaults[key], result[key])

@@ -43,6 +43,6 @@ Object.assign(RadioSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['change']
-    event: []
+    event: ['change']
   }
 })

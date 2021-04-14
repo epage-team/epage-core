@@ -42,6 +42,6 @@ Object.assign(CheckboxSchema, {
   logic: {
     value: ['<>', '><'],
     // event: ['change']
-    event: []
+    event: ['change']
   }
 })

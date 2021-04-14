@@ -25,6 +25,6 @@ Object.assign(InputSchema, {
   logic: {
     value: ['=', '!=', '<>', '><'],
     // event: ['focus', 'blur', 'change']
-    event: []
+    event: ['change']
   }
 })

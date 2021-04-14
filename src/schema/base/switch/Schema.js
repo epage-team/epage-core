@@ -29,6 +29,6 @@ Object.assign(SwitchSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['change']
-    event: []
+    event: ['change']
   }
 })

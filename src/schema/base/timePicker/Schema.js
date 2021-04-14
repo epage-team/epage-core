@@ -29,6 +29,6 @@ Object.assign(TimePickerSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['focus', 'blur', 'change']
-    event: []
+    event: ['change']
   }
 })

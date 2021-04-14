@@ -29,6 +29,6 @@ Object.assign(DatePickerSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['focus', 'blur', 'change']
-    event: []
+    event: ['change']
   }
 })

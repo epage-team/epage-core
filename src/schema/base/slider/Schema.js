@@ -19,6 +19,6 @@ Object.assign(SliderSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['change']
-    event: []
+    event: ['change']
   }
 })

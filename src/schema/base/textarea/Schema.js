@@ -23,6 +23,6 @@ Object.assign(TextareaSchema, {
   logic: {
     value: ['=', '!=', '<>', '><'],
     // event: ['focus', 'blur', 'change']
-    event: []
+    event: ['change']
   }
 })

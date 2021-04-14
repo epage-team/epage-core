@@ -31,6 +31,6 @@ Object.assign(RateSchema, {
   logic: {
     value: ['=', '!='],
     // event: ['change']
-    event: []
+    event: ['change']
   }
 })
