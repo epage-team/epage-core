@@ -34,9 +34,9 @@ export default class FormSchema extends Schema {
 
   // over write the base Schema method
   create (props) {
-    const { clone, dynamic } = props || {}
+    const { clone, dynamic, flatSchemas } = props || {}
     Schema.prototype.create.call(this, props)
-    setKeyAndName(this, clone, dynamic)
+    setKeyAndName(this, clone, dynamic, flatSchemas)
   }
 
   updateRequiredRule (rule, Schema) {

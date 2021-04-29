@@ -321,8 +321,9 @@ export function getWidgetModel (SchemaType, schema, typeBuilder) {
  * @param {Object} schema 待实例化的JSON
  * @param {Boolean} clone 是否复制
  * @param {Boolean} dynamic 是否为动态添加
+ * @param {Object} 打平的schema集合
  */
-export function setKeyAndName (schema, clone, dynamic) {
+export function setKeyAndName (schema, clone, dynamic, flatSchemas = {}) {
   if (!isNotEmptyString(schema.key)) {
     schema.key = randomStr()
     if (!schema.name) {
@@ -337,7 +338,12 @@ export function setKeyAndName (schema, clone, dynamic) {
     }
   }
   if (clone && !dynamic) {
-    schema.name = schema.key
+    const names = Object.keys(flatSchemas)
+      .map(i => flatSchemas[i].name)
+      .filter(_ => _)
+    if (include(names, schema.name)) {
+      schema.name = schema.key
+    }
   }
 }
 

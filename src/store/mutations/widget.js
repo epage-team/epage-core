@@ -80,7 +80,7 @@ export default {
   // 设计模式向表单添加一个widget，schema为此widget对应的默认schema
   // 目前默认添加到整个表单最后
   [types.$WIDGET_ADD] (state, { widget, schema }) {
-    const { selectedSchema, rootSchema } = state
+    const { selectedSchema, rootSchema, flatSchemas } = state
     const { flatWidgets, isSelected } = this.getters
     const wid = widget || schema.widget
     const WidgetSchema = flatWidgets[wid].Schema
@@ -91,7 +91,7 @@ export default {
 
     let childrenSchema = []
     // 根据传入的完整schema添加，需额外配置args参数
-    const args = (!widget && schema) ? { clone: true, schema } : {}
+    const args = (!widget && schema) ? { clone: true, schema, flatSchemas } : {}
     const newSchema = new WidgetSchema({ widgets: flatWidgets, ...args })
 
     if (isSelected) {
@@ -169,7 +169,7 @@ export default {
     const WidgetSchema = flatWidgets[schema.widget].Schema
     const parentList = getParentListByKey(key, rootSchema)
     const index = getIndexByKey(key, parentList)
-    const newSchema = new WidgetSchema({ schema, widgets: flatWidgets, clone: true })
+    const newSchema = new WidgetSchema({ schema, widgets: flatWidgets, clone: true, flatSchemas })
 
     parentList.splice(index + 1, 0, newSchema)
     this.commit(types.$ROOT_SCHEMA_FLAT, { rootSchema: Object.assign({}, rootSchema) })
