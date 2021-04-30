@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.5.6（2021/4/29）
+
+- [fix] : 修复根据schema添加widget时name被重置
+
 ### 0.5.5（2021/4/14）
 
 - [feat] : 增加基础表单组件`Schema`的`change`事件暴露，可通过逻辑面板配置`change`逻辑
